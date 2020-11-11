@@ -1,0 +1,113 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "bd7e0c04f520819bfa0c814813d149c4",
+    "packages": [
+        {
+            "name": "mk-j/php_xlsxwriter",
+            "version": "0.37",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mk-j/PHP_XLSXWriter.git",
+                "reference": "c4ba6023fcd49578062e35ed6af3e205dd50a903"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mk-j/PHP_XLSXWriter/zipball/c4ba6023fcd49578062e35ed6af3e205dd50a903",
+                "reference": "c4ba6023fcd49578062e35ed6af3e205dd50a903",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zip": "*",
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.3.*"
+            },
+            "type": "project",
+            "autoload": {
+                "classmap": [
+                    "xlsxwriter.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHP Library to write XLSX files",
+            "homepage": "https://github.com/mk-j/PHP_XLSXWriter",
+            "keywords": [
+                "excel",
+                "library",
+                "php",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2018-01-11T08:03:56+00:00"
+        },
+        {
+            "name": "nimmneun/onesheet",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nimmneun/onesheet.git",
+                "reference": "b1efc1ddfada8606afd8e3e520bc2faf42d72945"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nimmneun/onesheet/zipball/b1efc1ddfada8606afd8e3e520bc2faf42d72945",
+                "reference": "b1efc1ddfada8606afd8e3e520bc2faf42d72945",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zip": "*",
+                "php": ">=5.4.4 <8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4"
+            },
+            "suggest": {
+                "ext-gd": "Required for accurate cell width sizing only.",
+                "ext-mbstring": "Required for cell with auto sizing"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OneSheet\\": "src/OneSheet/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stefan",
+                    "email": "nimmneun@gmail.com"
+                }
+            ],
+            "description": "OneSheet is a fast and lightweight single sheet excel/xlsx file writer for php 5.3+ and 7.* with styling and cell auto-sizing support.",
+            "homepage": "https://github.com/nimmneun/onesheet",
+            "keywords": [
+                "excel",
+                "excel writer",
+                "excel2007",
+                "spreadsheet writer",
+                "xlsx"
+            ],
+            "time": "2019-10-02T17:24:29+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}

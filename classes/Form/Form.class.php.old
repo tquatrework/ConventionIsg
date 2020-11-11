@@ -1,0 +1,426 @@
+<?php
+
+namespace Form;
+use \PDO;
+class Form{
+
+    public $nom;
+    public $prenom;
+    public $telephone;
+    public $mail;
+    public $fonction;
+    public $dbh;
+    public $userId;
+    public $id_tuteur; 
+    public $tab;
+    public $page;
+    public $idPage;
+    public $boutonEnvoi;
+    public $numero_rue;
+    public $adresse;
+    public $complement_adresse;
+    public $fk_entreprise_tuteur = "fk_entreprise";
+    public $ville;
+    public $code_postal;
+    public $id;
+    public $fk_name;
+    public $nom_representant;
+    public $prenom_representant;
+    public $fonction_representant;
+    public $titre_form;
+
+    public function fetchStagiaire($dbh){
+        $request = 'SELECT * FROM stagiaire WHERE id_stagiaire = :id';
+        try{
+            $sth = $dbh->prepare($request);
+            if(!empty($_GET["id"])){
+                $sth->bindValue(":id",$_GET["id"]);
+            }else{
+                $sth->bindValue(":id",$_SESSION["id"]);
+            }
+            $sth->execute();
+            $result = $sth->fetch(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+        return $result;
+    }
+
+    public function fetchTable($dbh,$bool = false,$requestAll = false){
+        if($requestAll == true) {
+            $request = 'SELECT * FROM '.$this->page.'';
+        }else{
+            $request = 'SELECT * FROM '.$this->page.' WHERE id_'.$_GET["controller"].' = :id';
+        }
+
+        try {
+            $sth = $dbh->prepare($request);
+            if($_GET["controller"] == "stagiaire"){
+                $sth->bindValue(":id",$this->id);
+            }
+            elseif(isset($_GET["id_".$_GET["controller"]])){
+                $sth->bindValue(":id",$_GET["id_".$_GET["controller"]]);
+            }else{
+                $sth->bindValue(":id","");
+            }
+            $sth->execute();
+            if($bool == true){
+                $result = $sth->fetchAll(PDO::FETCH_ASSOC); 
+            }else{
+                $result = $sth->fetch(PDO::FETCH_ASSOC);
+            }
+        } 
+        catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+        return $result;
+    }
+
+    public function fetchTableEntreprise($dbh,$table,$where,$id,$bool = false,$requestAll = false){
+
+        if($requestAll == true) {
+            $request = 'SELECT * FROM '.$table.'';
+        }else{
+            $request = 'SELECT * FROM '.$table.' WHERE '.$where.' = :id';
+        }
+
+        try{
+            $sth = $dbh->prepare($request);
+            $sth->bindValue(":id",$id);
+            $sth->execute();
+
+            if($bool == true){
+                $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+            }else{
+                $result = $sth->fetch(PDO::FETCH_ASSOC);
+            }
+
+        } 
+
+        catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+        return $result;
+    }
+
+    public function logic($dbh,$id,$idLabel){
+        //Si post existe
+        if(isset($_POST["envoi_".$this->page])){
+            if($this->tab){
+                //update les informations du stagiaire
+                $this->update($dbh);
+            }else{
+                //Sinon insert les informations du stagiaire
+                $this->insert($dbh,$id,$idLabel);
+            }
+            
+            if($this->page == "stagiaire"){
+                $this->tab = $this->fetchStagiaire($dbh);
+            }else{
+                $this->tab = $this->fetchTable($dbh);
+            }
+        }
+    }
+
+    public function logique($dbh){
+        $this->page = $_GET["controller"];
+        $this->id();
+
+        //Partie Update
+        if(isset($_GET["id_".$this->page])){
+            if(isset($_POST["envoi_".$this->page])){
+                if($_SESSION["token"] != $_POST["token"]){
+                    die("Vous n'avez pas les permissions pour cette action");
+                }
+                $this->update($dbh);
+            }
+            $this->tab = $this->fetchTable($dbh);
+            $this->titre_form = "Modification";
+            return $bool = 1;
+        }
+
+        //Partie Insert
+        if(isset($_POST["envoi_".$this->page])){
+            $idLabel = ($this->page == "etablissement" || $this->page == "referent") ? "" : ",fk_utilisateur_".$this->page;
+            $id = ($this->page == "etablissement" || $this->page == "referent") ? "" : ",".$this->id;
+            $this->insert($dbh,$idLabel,$id);
+            header( "refresh:3;url=/Convention/index.php?controller=$this->page&task=liste" );
+            return $bool = 0;
+        }
+        $this->titre_form = "Ajout";
+        return $bool = 1;
+    }
+
+    public function id(){
+        $this->id = (!empty($_GET["id"]) && $_SESSION["profile"] == "administrateur") ? $_GET["id"] : $this->id;
+        $this->id = ($_SESSION["profile"] == "etudiant") ? $_SESSION["id"] : $this->id;
+    }
+
+    public function insert($dbh,$idLabel,$id){
+        $keyString = "(";
+        $valueString = "(";
+        $compteur = 0;
+        foreach($_POST as $key=>$value){
+            if($key == "envoi_".$this->page){continue;}            
+            if($key == "token"){continue;}            
+            $tabResult = $this->champExist($dbh,$this->page,$key);
+            if($tabResult == 0){continue;}
+            if($compteur == 0){
+                $keyString .= "$key";
+                $valueString .= "\"$value\"";
+                $compteur ++;
+                continue;
+            }    
+            $keyString .= ",$key";
+            $valueString .= ",\"$value\"";
+        }
+        $keyString .= "$idLabel)";
+        $valueString .= "$id)";
+        $request = 'INSERT INTO '.$this->page.' '.$keyString.' VALUES '.$valueString.'';
+        $this->tryCatch($dbh,$request);
+        echo "<div class='alert alert-success col-md-auto d-inline-block'>ajout ".ucfirst($this->page)." effectué</div>";
+    }
+
+    public function update($dbh){
+        $compteur = 0;
+        //Faire en sorte que les jours de la semaine ont une valeur non NULL
+        if($this->page == "stage"){
+            $array = array("lundi","mardi","mercredi","jeudi","vendredi","samedi");
+            foreach($array as $cle=>$valeur){
+                if(isset($_POST[$valeur])){continue;}
+                $request = 'UPDATE '.$this->page.' SET '.$valeur.' = "" WHERE id_'.$_GET["controller"].' = :id';
+                $this->tryCatch($dbh,$request);
+            }
+        }
+        // Parcours de POST et update la valeur si elle existe et est différent
+        foreach($_POST as $key=>$value){
+            if($key == "envoi_".$this->page || $key == "token"){continue;}
+            $request = 'SELECT '.$key.' FROM '.$this->page.' WHERE id_'.$_GET["controller"].' = :id';
+            $tabResult = $this->tryCatch($dbh,$request,true);
+            if(!$tabResult || $tabResult[$key] == $value){continue;}
+
+            $request = 'UPDATE '.$this->page.' SET '.$key.' = "'.$value.'" WHERE id_'.$_GET["controller"].' = :id';
+            $this->tryCatch($dbh,$request);
+        }
+        $compteur ++;
+        
+        if($compteur == 0){return;}
+        echo "<div class='alert alert-success col-md-auto d-inline-block'>Donnée(s) modifiée(s)</div>";
+    }
+
+    public function formGroup($label,$value,$name,$type,$col = 4,$hidden = "",$for=""){
+        $min = ($type == "number") ? 0 : "";
+
+        if($hidden != "hidden"){
+            if($name == "complement_adresse_".$this->page || $name == "complement_adresse_assurance" || $name == "numero_rue_assurance" || $name == "adresse_assurance" || $name == "code_postal_assurance" || $name == "ville_assurance"){
+                $required = "";
+            }else{
+                $required = "required";
+            }
+        }else{
+            $required = "";
+        }
+
+        ?>
+        <div class="form-group col-md-<?=$col?>">
+            <label <?=$hidden?> for="<?=$for?>"><?=$label?></label>
+            <input <?=$hidden?> <?=$required?> class="form-control" style="background-color:#e8f0ff" type="<?=$type?>" min="<?=$min?>" name="<?=$name?>" id="<?=$name?>" value="<?=$value;?>">
+            <?php if($name == "nom_entreprise"): ?>
+                <small class="form-text" style="color:orange"></small>
+            <?php endif; ?>
+        </div>
+        <?php
+    }
+
+    public function boutonRadio($label,$value,$name,$id,$checked = "",$col = 2){
+        ?>
+        <div class="form-check form-check-inline col-md-<?=$col?>">
+            <input class="form-check-input" type="radio" name="<?=$name?>" id="<?=$id?>" value="<?=$value?>" <?=$checked?>/>
+            <label class="form-check-label"><?=$label?></label>
+        </div>
+        <?php
+    }
+
+    public function nomPrenom(){
+        ?>
+        <div class="form-row">
+            <?php
+            $this->formGroup("Nom",$this->tab["nom_".$this->page],"nom_".$this->page,"text");
+            $this->formGroup("Prenom",$this->tab["prenom_".$this->page],"prenom_".$this->page,"text");
+            ?>
+        </div>
+        <?php
+    }
+    
+    public function nom(){
+        $this->formGroup("Nom",$this->tab["nom_".$this->page],"nom_".$this->page,"text");
+    }
+    
+    public function prenom(){
+        $this->formGroup("Prenom",$this->tab["prenom_".$this->page],"prenom_".$this->page,"text");
+    }
+
+    public function telephoneMail(){
+        ?>
+        <div class='form-row'>
+            <?php
+            $this->formGroup("Telephone",$this->tab["telephone_".$this->page],"telephone_".$this->page,"number");
+            $this->formGroup("Mail",$this->tab["mail_".$this->page],"mail_".$this->page,"mail");
+            ?>
+        </div>
+        <?php
+    }
+
+    public function adresse(){
+        ?>
+        <div class="form-row">
+            <?php
+            $this->formGroup("Numéro",$this->tab["numero_rue_".$this->page],"numero_rue_".$this->page,"number",2);
+            $this->formGroup("Voie",$this->tab["adresse_".$this->page],"adresse_".$this->page,"text",4);
+            $this->formGroup("Code Postal",$this->tab["code_postal_".$this->page],"code_postal_".$this->page,"number",2);
+            ?>
+        </div>
+        <div class="form-row">
+            <?php
+            $this->formGroup("Complément d'adresse",$this->tab["complement_adresse_".$this->page],"complement_adresse_".$this->page,"text");
+            $this->formGroup("Ville",$this->tab["ville_".$this->page],"ville_".$this->page,"text");
+            ?>
+        </div>
+        <?php
+    }
+
+    public function discipline(){
+        ?>
+        <div class="form-row">
+            <?php
+            $this->formGroup("Fonction ou discipline",$this->tab["fonction_".$this->page],"fonction_".$this->page,"text");
+            ?>
+        </div>
+        <?php
+    }
+    
+    public function tryCatch($dbh,$request,$bool = false){
+        try {
+
+            //Logique pour determiner l'id
+            if(isset($_GET["id_".$_GET["controller"]])){
+
+                $id = $_GET["id_".$_GET["controller"]];
+
+            }elseif($_GET["controller"] == "stagiaire"){
+
+                if(!empty($_GET["id"])){
+                    $id = $_GET["id"];
+                }else{
+                    $id = $_SESSION["id"];
+                }
+
+            }else{
+                $id = "";
+            }
+            
+
+            //Execution de la requete
+            $sth = $dbh->prepare($request);
+            $sth->bindValue(':id',$id);
+            $sth->execute();
+
+            //Fetch et renvoi du resultat si true
+            if($bool == true){
+                $result = $sth->fetch(PDO::FETCH_ASSOC);
+                return $result;
+            }
+
+        // Gestion des erreurs    
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+
+    public function representant(){
+        ?>
+        <div class="form-row">
+            <?php
+            $this->formGroup("Nom",$this->tab["nom_representant_".$this->page],"nom_representant_".$this->page,"text");
+            $this->formGroup("Prenom",$this->tab["prenom_representant_".$this->page],"prenom_representant_".$this->page,"text");
+            ?>
+        </div>
+        <?php
+        $this->telephoneMail();
+        ?>
+        <div class="form-row">
+            <?php
+            $this->formGroup("Fonction",$this->tab["fonction_representant_".$this->page],"fonction_representant_".$this->page,"text");
+            ?>
+        </div>
+        <?php
+    }
+
+    public function tryPrepare($dbh,$request,$array,$fetch = false){
+        try{
+            //Execution de la requete
+            $sth= $dbh->prepare($request);
+            $sth->execute($array);
+
+            //Fetch du resultat si true
+            if($fetch){
+                $result = $sth->fetch(PDO::FETCH_ASSOC);
+                return $result;
+            }
+        }
+
+        //Gestion des erreurs
+        catch(PDOException $e){
+            echo $e->getMessage();
+        }
+    }
+
+    public function tryPrepareAll($dbh,$request,$array){
+        try{
+            //Execution de la requete
+            $sth= $dbh->prepare($request);
+            $sth->execute($array);
+
+            //Fetch du resultat
+            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+
+        //Gestion des erreurs
+        catch(PDOException $e){
+            echo $e->getMessage();
+        }
+    }
+
+    public function button(){
+        ?>
+        <input type="hidden" name="token" id="token" value="<?=$_SESSION["token"]?>">
+        <button name="envoi_<?=$this->page?>" type="submit" id="submit" class="btn btn-primary">Envoyer</button>
+        <?php
+    }
+
+    public function champExist($dbh,$table,$champ){
+        $request = 'SELECT count(*) FROM '.$table.' WHERE  '.$champ.' = '.$champ.' ';
+        try{
+            $sth = $dbh->prepare($request); 
+            $result = $sth->execute();
+        }
+        catch(Exception $e) {
+            return 0;
+        }
+        return $result;
+    }
+
+    public function selected($var1,$var2){
+
+        if($var1 == $var2){
+            $selected = "selected";
+        }else{
+            $selected = "";
+        }
+
+        return $selected;
+    }
+
+}
