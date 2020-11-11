@@ -1,12 +1,15 @@
 <?php
 
 //--------Debut article 2-------------
-$pdf->article("Article 2 - Objectif du stage","Le stage correspond à une période temporaire de mise en situation en milieu professionnel au cours de laquelle l’étudiant(e) acquiert des compétences professionnelles et met en oeuvre les acquis de sa formation en vue de l’obtention d’un diplôme ou d’une certification et de favoriser son insertion professionnelle. Le stagiaire se voit confier une ou des missions conformes au projet pédagogique défini par son établissement d’enseignement et approuvées par l’organisme d’accueil.
-Le programme est établi par l’établissement d’enseignement et l’organisme d’accueil en fonction du programme général de la formation dispensée.");
-
-$pdf->wid("Intitulé du poste : ",$intitule_poste,0,true,1,true);
-
-$pdf->wid("Activités confiées : ",$activites_missions,0,true,1,true);
+$pdf->article("Article 2 - Objectif du stage","Le stage correspond à une période temporaire de mise en situation en milieu professionnel au cours de laquelle l'étudiant(e) acquiert des compétences professionnelles et met en oeuvre les acquis de sa formation en vue de l'obtention d'un diplôme ou d'une certification et de favoriser son insertion professionnelle. Le stagiaire se voit confier une ou des missions conformes au projet pédagogique défini par son établissement d'enseignement et approuvées par l'organisme d'accueil.
+Le programme est établi par l'établissement d'enseignement et l'organisme d'accueil en fonction du programme général de la formation dispensée.");
+$pdf->ln();
+$pdf->Cell(60,5,utf8_decode("Intitulé du poste : "),0,1);
+$pdf->Cell(0,5,utf8_decode($intitule_poste),1,1);
+$pdf->ln();
+$pdf->Cell(60,5,utf8_decode("Activités confiées : "),0,1);
+$pdf->MultiCell(0,5,utf8_decode($activites_missions),1);
+$pdf->ln();
 
 /* 
 switch($classe){
