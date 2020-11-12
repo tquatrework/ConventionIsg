@@ -42,8 +42,10 @@ $pdf->wid("Secteur d'activité : ", $secteur_activite_entreprise,-1,false,0,fals
 // $pdf->Cell(40,5,"Secteur d'activité : ",1,0,);
 // $pdf->MultiCell(0,5,$secteur_activite_entreprise,1);
 $pdf->wid("Service dans lequel le stage sera effectué : ", $services_entreprise);
-$pdf->Cell(60,5,utf8_decode("Téléphone :   ".$telephone_entreprise),0,0);
-$pdf->Cell(60,5,utf8_decode("Mail :   ".$mail_entreprise),0,1);
+$pdf->wid("Téléphone :   ",$telephone_entreprise,0);
+$pdf->wid("Mail :   ",$mail_entreprise,60);
+//$pdf->Cell(60,5,utf8_decode("Téléphone :   ".$telephone_entreprise),0,0);
+//$pdf->Cell(60,5,utf8_decode("Mail :   ".$mail_entreprise),0,1);
 if($lieu_bis_entreprise != "Non-renseigné"){
     $pdf->wid("Lieu du stage si différent de l'adresse de la société ou de l'organisme d'accueil : ", $lieu_bis_entreprise, -6);
 }

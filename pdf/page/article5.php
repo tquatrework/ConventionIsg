@@ -2,8 +2,32 @@
 $pdf->pageIf($pdf,2);
 $pdf->ligneLn("Article 5 - Gratification, avantages");
 $pdf->normal();
-$pdf->mLigne("En France, lorsque la durée du stage est supérieure à deux mois consécutifs ou non, celui-ci fait obligatoirement l’objet d’une gratification, sauf en cas de règles particulières applicables dans certaines collectivités d’outre-mer françaises et pour les stages relevant de l’article L4381-1 du code de la santé publique.
-Le montant horaire de la gratification est fixé à 15 % du plafond horaire de la sécurité sociale.");
+/*
+$pdf->page($pdf,255);
+$pdf->mLigne("En France, lorsque la durée du stage est supérieure à deux mois consécutifs ou non, celui-ci fait obligatoirement l’objet d’une gratification, sauf en cas de règles particulières applicables dans certaines collectivités d’outre-mer françaises et pour les stages relevant de l’article L4381-1 du code de la santé publique.");
+$pdf->page($pdf,255);
+$pdf->mLigne("Le montant horaire de la gratification est fixé à 15 % du plafond horaire de la sécurité sociale défini en application de l’article L.241-3 du code de la sécurité sociale. Une convention de branche ou un accord professionnel peut définir un montant supérieur à ce taux.")
+
+
+
+$pdf->page($pdf,255);
+$pdf->mLigne("Le montant horaire de la gratification est fixé à 15 % du plafond horaire de la sécurité sociale défini en application de l’article L.241-3 du code de la sécurité sociale. Une convention de branche ou un accord professionnel peut définir un montant supérieur à ce taux.");
+$pdf->page($pdf,255);
+$pdf->mLigne("L’organisme peut décider de verser une gratification pour les stages dont la durée est inférieure ou égale à deux mois."
+$pdf->saut();
+$pdf->page($pdf,255);
+$pdf->mLigne("En cas de suspension ou de résiliation de la présente convention, le montant de la gratification due au stagiaire est proratisé en fonction de la durée du stage effectué.");
+$pdf->page($pdf,255);
+$pdf->mLigne("La durée donnant droit à gratification s’apprécie compte tenu de la présente convention et de ses avenants éventuels, ainsi que du nombre de jours de présence effective du/de la stagiaire dans l’organisme.");
+$pdf->saut();
+*/
+
+// A ETABLIR
+// BOUCLE IF POUR LE MONTANT DE LA GRATIFICATION
+
+
+/*
+
 /*$pdf->Cell(100,5,"soit 3,90 ".EURO." / heure.",0,1);
 $pdf->saut();*/
 
@@ -22,21 +46,9 @@ $pdf->saut();*/
     $pdf->wid("Le montant de la gratification est fixé à : ","Non-renseigné",2,true);
 }
 $pdf->saut();
-$pdf->normal();*/
-$pdf->mLigne("Une convention de branche ou un accord professionnel peut définir un montant supérieur à ce taux.
-La gratification due par un organisme de droit public ne peut être cumulée avec une rémunération versée par ce même organisme au cours de la période concernée.
-La gratification est due sans préjudice du remboursement des frais engagés par le stagiaire pour effectuer son stage et des avantages offerts, le cas échéant, pour la restauration, l’hébergement et le transport.
-L’organisme peut décider de verser une gratification pour les stages dont la durée est inférieure ou égale à deux mois.");
-$pdf->saut();
-$pdf->mLigne("En cas de suspension ou de résiliation de la présente convention, le montant de la gratification due au stagiaire est proratisé en fonction de la durée du stage effectué.
-La durée donnant droit à gratification s’apprécie compte tenu de la présente convention et de ses avenants éventuels, ainsi que du nombre de jours de présence effective du/de la stagiaire dans l’organisme.");
-$pdf->saut();
-
-// A ETABLIR
-// BOUCLE IF POUR LE MONTANT DE LA GRATIFICATION
-
-
-
+$pdf->normal();
+*/
+/*
 $pdf->page($pdf,270);
 $pdf->gras();
 $pdf->ligneLn("Article 5 bis - Accès aux droits des salariés - Avantages");
@@ -65,7 +77,7 @@ $pdf->saut();
 
 $pdf->wid("AUTRES AVANTAGES ACCORDES : ",$autres_avantages,0,true,1,true);
 
-
+*/
 
 /*$pdf->page($pdf,265);
 

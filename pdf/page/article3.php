@@ -19,7 +19,7 @@ if($temps_complet == "Non_renseigné"){
 
     //$pdf->SetTextColor(0,0,255);
     $pdf->MultiCell(180,5,utf8_decode("La durée hebdomadaire de présence du stagiaire dans l'organisme d'accueil sera sur la base de 35 heures, sur la base d'un ".$temps_complet));
-    $pdf->wid(utf8_decode("La durée hebdomadaire de présence du stagiaire dans l'organisme d'accueil sera sur la base de 35 heures, sur la base d'un "),$temps_complet);
+    //$pdf->wid(utf8_decode("La durée hebdomadaire de présence du stagiaire dans l'organisme d'accueil sera sur la base de 35 heures, sur la base d'un "),$temps_complet);
     //$pdf->Cell(5,5,utf8_decode($temps_complet),0,1);
     $pdf->SetTextColor(0,0,0);
 
@@ -50,7 +50,7 @@ foreach($arrayJour as $value){
 }
 
 $pdf->ln();
-$pdf->wid("","$lundi $mardi $mercredi $jeudi $vendredi $samedi",0,true);
+$pdf->wid("","$lundi $mardi $mercredi $jeudi $vendredi $samedi",-5,true);
 
 
 
@@ -59,7 +59,7 @@ $pdf->normal();
 $pdf->MultiCell(0,5,utf8_decode("Si le stagiaire doit être présent dans l'organisme d'accueil la nuit, le dimanche ou un jour férié, préciser les cas particuliers : "));
 $pdf->page($pdf,265);
 $pdf->MultiCell(0,5,utf8_decode($cas_particulier),1);
-
+$pdf->ln();
 
 
 /* $pdf->ligneLn("NB : pour les STAGIAIRES de 4e et de 5e année, se référer aussi aussi au programme des séminaires.");
