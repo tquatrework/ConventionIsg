@@ -1,11 +1,15 @@
 <?php
 
-$pdf->page($pdf,260);
+//$pdf->page($pdf,260);
 $pdf->ligneLn("Article 9 - Congés, interruption ou prolongation du stage");
 $pdf->normal();
-$pdf->mLigne("En France (sauf en cas de règles particulières applicables dans certaines collectivités d'outre-mer françaises ou dans les organismes de droit public), en cas de grossesse, de paternité ou d'adoption, le STAGIAIRE bénéficie de congés et d'autorisations d'absence d'une durée équivalente à celle prévues pour les salariés aux articles L.1225-16 à L.1225-28, L.1225-35, L.1225-37,L.1225-46 du code du travail.");
+$pdf->mLigne("En France (sauf en cas de règles particulières applicables dans certaines collectivités d’outre-mer françaises ou dans les organismes de droit public), 
+en cas de grossesse, de paternité ou d’adoption, le stagiaire bénéficie de congés et d’autorisations d’absence d’une durée équivalente à celle prévues pour les salariés 
+aux articles L.1225-16 à L.1225-28, L.1225-35, L.1225-37, L.1225-46 du code du travail.");
 
-$pdf->page($pdf,265);
+$pdf->mLigne("Pour les stages dont la durée est supérieure à deux mois et dans la limite de la durée maximale de six mois, des congés ou autorisations d'absence sont possibles.");
+$pdf->mLigne("NOMBRE DE JOURS DE CONGES AUTORISES / ou modalités des congés et autorisations d’absence durant le stage :");
+/*
 if($modalite_conge_booleen == "oui"){
     
     if($modalite_conge != "Non-renseigné"){
@@ -20,7 +24,7 @@ if($modalite_conge_booleen == "oui"){
         $pdf->mLigne("$modalite_conge");
         $pdf->SetTextColor(0,0,0);
     }
-}
+}*/
 
 $pdf->saut();
 if($date_debut_fermeture_entreprise != "Non-renseigné" && $fermeture_entreprise != "off" && $date_fin_fermeture_entreprise != "Non-renseigné"){

@@ -50,6 +50,7 @@ require_once("page/article7.php");
 $pdf->gras();
 require_once("page/article8.php");
 $pdf->gras();
+/*
 require_once("page/article9.php");
 $pdf->saut();
 require_once("page/article10.php");
@@ -62,5 +63,6 @@ $pdf->saut();
 require_once("page/article14.php");
 $pdf->saut();
 require_once("page/signature.php");
+*/
 $pdf->Output();
 ?>

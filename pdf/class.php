@@ -232,6 +232,25 @@ function article($titre,$texte){
     $this->saut();
 }
 
+function dblCell($hauteur=5,$label,$input,$decalageint=0,$decalageext=0,$border=0,$lnInput=0,$ln=1, $align="L", $fill = 0){
+//function dblCell($largeur=0,$hauteur=5,$label,$input,$border=0,$ln=1,$align="L", $fill = 0,$color1=[0,0,0],$color2=[0,0,255]){
+    $this->SetTextColor(0,0,0);
+    $labelWidth = $this->GetStringWidth($label);
+    $this->Cell($labelWidth+$adecalageint,$hauteur,utf8_decode($label),$border,$lnInput,$align,$fill);
+
+    
+    if($input == "Non-renseigné"){
+        $this->SetTextColor(255,0,0);
+        $this->Cell(15,$hauteur,utf8_decode("Non-renseigné"),$border,$ln,$align,$fill);
+    }else{
+        $this->SetTextColor(0,0,255);
+	$inputWidth = $this->GetStringWidth($input);
+        $this->Cell($inputWidth+$decalageext,$hauteur,utf8_decode($input),$border,$ln,$align,$fill);
+    }
+
+    $this->SetTextColor(0,0,0);
+}
+
 function wid($label,$input,$decalage = 0,$gras = false,$lnInput = 0,$inputMcell = true){
     $labelWidth = $this->GetStringWidth($label);
     if($gras == true){
@@ -300,7 +319,7 @@ function wid($label,$input,$decalage = 0,$gras = false,$lnInput = 0,$inputMcell 
     // Police Arial italique 8
     $this->SetFont('Arial','I',8);
     // Numéro de page
-    $this->Cell(150,10,'Convention de stage - ISEG',0,0);
+    $this->Cell(150,10,'Convention de stage - ISG',0,0);
     $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'R');
 }
 

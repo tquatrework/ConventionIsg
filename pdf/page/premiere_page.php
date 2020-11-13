@@ -1,4 +1,5 @@
 <?php
+//$pdf->SetAutoPageBreak(1,30);
 //-----------Début En-Tête------------
 $pdf->Image('ISG_logo.jpg',30,10,-400);
 $pdf->SetFont('Arial','B',15);
@@ -39,13 +40,9 @@ $pdf->widIf($pdf,"Code postal et ville : ",$code_postal_entreprise,$ville_entrep
 $pdf->widIf($pdf,"Représentée par : ", $nom_representant_entreprise, $prenom_representant_entreprise,"",-4);
 $pdf->wid("Fonction du représentant : ", $fonction_representant_entreprise);
 $pdf->wid("Secteur d'activité : ", $secteur_activite_entreprise,-1,false,0,false);
-// $pdf->Cell(40,5,"Secteur d'activité : ",1,0,);
-// $pdf->MultiCell(0,5,$secteur_activite_entreprise,1);
 $pdf->wid("Service dans lequel le stage sera effectué : ", $services_entreprise);
-$pdf->wid("Téléphone :   ",$telephone_entreprise,0);
-$pdf->wid("Mail :   ",$mail_entreprise,60);
-//$pdf->Cell(60,5,utf8_decode("Téléphone :   ".$telephone_entreprise),0,0);
-//$pdf->Cell(60,5,utf8_decode("Mail :   ".$mail_entreprise),0,1);
+$pdf->dblCell(5,"Téléphone :   ",$telephone_entreprise,0,20,0,0,0);
+$pdf->dblCell(5,"Mail :   ",$mail_entreprise,0,0,0,0,1);
 if($lieu_bis_entreprise != "Non-renseigné"){
     $pdf->wid("Lieu du stage si différent de l'adresse de la société ou de l'organisme d'accueil : ", $lieu_bis_entreprise, -6);
 }
@@ -62,8 +59,8 @@ $pdf->wid("Nationalité : ",$nationalite,-2);
 $pdf->Cell(60,5,utf8_decode("Demeurant : "),0,1);
 $pdf->widIf($pdf,"Adresse : ",$numero_rue_stagiaire,$adresse_stagiaire,"",1);
 $pdf->widIf($pdf,"Code postal et ville : ",$code_postal_stagiaire,$ville_stagiaire,"",1);
-$pdf->Cell(60,5,utf8_decode("Téléphone : ".$telephone_stagiaire),0,0);
-$pdf->Cell(60,5,utf8_decode("Mail : ".$identifiant),0,1);
+$pdf->dblCell(5,"Téléphone :   ",$telephone_stagiaire,0,20,0,0,0);
+$pdf->dblCell(5,"Mail :   ",$identifiant,0,0,0,0,1);
 $pdf->Ln();
 $pdf->wid("Intitulé du cursus suivi dans l'établissement : ", $classe,1);
 $pdf->Ln();
@@ -101,7 +98,7 @@ $pdf->page($pdf,250);
 //$pdf->AddPage()
 $pdf->SetFont('Arial',"B",10);
 //$pdf->Cell(0,5,utf8_decode("Numéro de sécurité sociale du STAGIAIRE"),0,1);
-$pdf->MultiCell(0,5,utf8_decode("Numéro de sécurité sociale du STAGIAIRE + nom et adresse postale de la caisse d\’assurance maladie à contacter en cas d\’accident (lieu de domicile du STAGIAIRE sauf exception) :\n"),0);
+$pdf->MultiCell(0,5,utf8_decode("Numéro de sécurité sociale du STAGIAIRE + nom et adresse postale de la caisse d’assurance maladie à contacter en cas d’accident (lieu de domicile du STAGIAIRE sauf exception) :\n"),0);
 $pdf->SetFont('Arial',"",10);
 $pdf->MultiCell(0,5, utf8_decode($numero_securite_social."\nAssurance maladie ".$numero_rue_assurance." ".$adresse_caisse_assurance."\n".$code_postal_assurance." ".$ville_assurance."\n"),1,'L');
 

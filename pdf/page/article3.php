@@ -1,5 +1,6 @@
 <?php
-
+//$pdf->SetAutoPageBreak(1,30);
+//--------Debut article 3-------------
 $pdf->page($pdf,265);
 $pdf->gras();
 $pdf->SetFont('Arial',"B",10);
@@ -27,8 +28,7 @@ if($temps_complet == "Non_renseigné"){
 
 
 
-$pdf->Cell(5,5,utf8_decode("Si temps partiel, indiquer les jours de présence :"),0,1);
-$pdf->page($pdf,265);
+//$pdf->Cell(5,5,utf8_decode("Si temps partiel, indiquer les jours de présence :"),0,1);
 
 /*$pdf->mLigne("A défaut de la remise d'un règlement intérieur précisant des horaires spécifiques à l\'entreprise ou issu d'un accord de branche, l\'étudiant effectuera son stage du lundi au vendredi, 35 heures hebdomadaires, avec une pause déjeuner d'une heure.");
 
@@ -49,9 +49,8 @@ foreach($arrayJour as $value){
     }
 }
 
+$pdf->wid("Si temps partiel, indiquer les jours de présence :","$lundi $mardi $mercredi $jeudi $vendredi $samedi",5,true);
 $pdf->ln();
-$pdf->wid("","$lundi $mardi $mercredi $jeudi $vendredi $samedi",-5,true);
-
 
 
 $pdf->page($pdf,265);
