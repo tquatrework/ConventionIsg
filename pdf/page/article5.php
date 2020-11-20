@@ -54,27 +54,21 @@ $pdf->mLigne("(Organisme de droit privé en France sauf en cas de règles partic
 $pdf->page($pdf,270);
 $pdf->mLigne("Le stagiaire bénéficie des protections et droits mentionnés aux articles L.1121-1, L.1152-1 et L.1153-1 du code du travail, dans les mêmes conditions que les salariés.");
 $pdf->page($pdf,270);
-$pdf->mLigne("Le stagiaire a accès au restaurant d’entreprise ou aux titres-restaurants prévus à l’article L.3262-1 du code du travail, dans les mêmes conditions que les salariés de l’organisme d’accueil. Il bénéficie également de la prise en charge des frais de transport prévue à l’article L.3261-2 du même code.");
+$pdf->mLigne("Le stagiaire a accès au restaurant d'entreprise ou aux titres-restaurants prévus à l'article L.3262-1 du code du travail, dans les mêmes conditions que les salariés de l'organisme d'accueil. Il bénéficie également de la prise en charge des frais de transport prévue à l'article L.3261-2 du même code.");
 $pdf->page($pdf,270);
-$pdf->mLigne("Le stagiaire accède aux activités sociales et culturelles mentionnées à l’article L.2323-83 du code du travail dans les mêmes conditions que les salariés.");
+$pdf->mLigne("Le stagiaire accède aux activités sociales et culturelles mentionnées à l'article L.2323-83 du code du travail dans les mêmes conditions que les salariés.");
 $pdf->saut();
 
-//$pdf->page($pdf,270);
 $pdf->gras();
-$pdf->ligneLn("Article 5ter – Accès aux droits des agents ‐ Avantages");
+$pdf->ligneLn("Article 5ter - Accès aux droits des agents - Avantages");
 $pdf->normal();
-$pdf->mLigne("(Organisme de droit public en France sauf en cas de règles particulières applicables dans certaines collectivités d’outre-mer françaises) :");
-//$pdf->page($pdf,270);
-$pdf->mLigne("Les trajets effectués par le stagiaire d’un organisme de droit public entre son domicile et son lieu de stage sont pris en charge dans les conditions fixées par le décret n°2010-676 du 21 juin 2010 instituant une prise en charge partielle du prix des titres d’abonnement correspondant aux déplacements effectués par les agents publics entre leur résidence habituelle et leur lieu de travail.");
-//$pdf->page($pdf,270);
+$pdf->mLigne("(Organisme de droit public en France sauf en cas de règles particulières applicables dans certaines collectivités d'outre-mer françaises) :");
+$pdf->mLigne("Les trajets effectués par le stagiaire d'un organisme de droit public entre son domicile et son lieu de stage sont pris en charge dans les conditions fixées par le décret n°2010-676 du 21 juin 2010 instituant une prise en charge partielle du prix des titres d'abonnement correspondant aux déplacements effectués par les agents publics entre leur résidence habituelle et leur lieu de travail.");
 $pdf->mLigne("Le stagiaire accueilli dans un organisme de droit public et qui effectue une mission dans ce cadre bénéficie de la prise en charge de ses frais de déplacement temporaire selon la réglementation en vigueur.");
-//$pdf->page($pdf,270);
-
 $pdf->mLigne("Est considéré comme sa résidence administrative le lieu du stage indiqué dans la présente convention.");
 $pdf->saut();
-
 //$pdf->wid("AUTRES AVANTAGES ACCORDES : ",$autres_avantages,0,true,1,true);
-$pdf->wid("AUTRES AVANTAGES ACCORDES : ",$droit_avantage,0,true,1,true);
+$pdf->wid("AUTRES AVANTAGES ACCORDES : ",$droit_avantage,1,true,1,true);
 $pdf->ln();
 
 /*$pdf->page($pdf,265);

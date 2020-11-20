@@ -5,8 +5,8 @@ $pdf->ligneLn("Article 6 - Régime de protection social");
 $pdf->normal();
 $pdf->mLigne("Pendant la durée du stage, le stagiaire reste affilié à son régime de Sécurité sociale antérieur.");
 $pdf->mLigne("Les stages effectués à l'étranger sont signalés préalablement au départ du stagiaire à la Sécurité sociale lorsque celle-ci le demande.");
-$pdf->mLigne("Pour les stages à l'étranger, les dispositions suivantes sont applicables sous réserve de conformité avec la législation du pays d’accueil 
-et de celle régissant le type d’organisme d’accueil.'");
+$pdf->mLigne("Pour les stages à l'étranger, les dispositions suivantes sont applicables sous réserve de conformité avec la législation du pays d'accueil 
+et de celle régissant le type d'organisme d'accueil.'");
 $pdf->mLigne("En cas de déplacement à l'étranger, I'ENTREPRISE devra en informer l'ETABLISSEMENT par écrit au moins 15 jours avant la date prévue pour le départ 
 pour qu'il puisse le signaler à la sécurité sociale' A défaut' l'ENTREPRISE s'engage à cotiser pour la protection du STAGIAIRE'");
 $pdf->saut();

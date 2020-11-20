@@ -1,7 +1,7 @@
 <?php
 
 // ChangeCampus
-$pdf->Cell(90,5,utf8_decode("Fait à : Lyon"));
+$pdf->Cell(90,5,utf8_decode("Fait à : Bordeaux"));
 $today = getdate();
 $sdate= "le : ".$today["mday"]."/".$today["mon"]."/".$today["year"];
 $pdf->Cell(90,5,utf8_decode($sdate));

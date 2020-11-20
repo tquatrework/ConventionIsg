@@ -1,7 +1,8 @@
 <?php
 
 $pdf->gras();
-$pdf->ligneLn("Article 11 - Devoir de réserve et confidentialité");
+$pdf->ligneLn("Article 11 - Propriété intellectuelle");
 $pdf->normal();
-$pdf->mLigne("Le devoir de réserve est de rigueur absolue et apprécié par l'ENTREPRISE compte-tenu de ses spécificités. Le STAGIAIRE prend donc l'engagement de n'utiliser en aucun cas les informations recueillies ou obtenues par eux pour en faire publication, communication à des tiers sans accord préalable de l'ENTREPRISE, y compris le rapport de stage. Cet engagement vaut non seulement pour la durée du stage mais également après son expiration. Le STAGIAIRE s'engage à ne conserver, emporter, ou prendre copie d'aucun document ou logiciel, de quelque nature que ce soit appartenant à l'ENTREPRISE, sauf accord de ce dernier.
-Dans le cadre de la confidentialité des informations contenues dans le rapport de stage, l'ENTREPRISE peut demander une restriction de la diffusion du rapport, voire le retrait de certains éléments confidentiels. Les personnes amenées à en connaître sont contraintes par le secret professionnel à n'utiliser ni divulguer les informations du rapport.");
+$pdf->mLigne("Conformément au code de la propriété intellectuelle, dans le cas où les activités du stagiaire donnent lieu à la création d'une oeuvre protégée par le droit d'auteur ou la propriété industrielle (y compris un logiciel), si l'organisme d'accueil souhaite l'utiliser et que le stagiaire en est d'accord, un contrat devra être signé entre le stagiaire (auteur) et l'organisme d'accueil.");
+$pdf->mLigne("Le contrat devra alors notamment préciser l'étendue des droits cédés, l'éventuelle exclusivité, la destination, les supports utilisés et la durée de la cession, ainsi que, le cas échéant, le montant de la rémunération due au stagiaire au titre de la cession. Cette clause s'applique quel que soit le statut de l'organisme d'accueil.");
+$pdf->ln();
