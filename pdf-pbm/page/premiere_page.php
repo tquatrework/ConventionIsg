@@ -26,7 +26,6 @@ $pdf->Cell(100,5,utf8_decode($nom_etablissement),0,1);
 $pdf->widIf($pdf,"Adresse :",$numero_rue_etablissement,$adresse_etablissement,$code_postal_etablissement." ". $ville_etablissement,3);
 $pdf->wid("Téléphone : ", $telephone_etablissement,-4);
 $pdf->widIf($pdf,"Représenté par : ",$nom_representant_etablissement,$prenom_representant_etablissement,"",-3);
-$pdf->Ln();
 //$pdf->wid("Fonction du représentant : ", $fonction_representant_etablissement);
 //$pdf->wid("Mail : ",$mail_etablissement,3);
 
@@ -76,14 +75,9 @@ if($date_debut == "Non-renseigné" || $date_fin == "Non-renseigné"){
     $pdf->wid("Dates : ","du $date_debut au $date_fin",2,true);
 }
 
-if(isset($duree_totale_de)){
-    $pdf->wid("Représentant une durée totale de :", " $duree_semaine_mois  $duree_totale_de" );
-}
-
+// AJOUTER ICI UN BLOC IF POUR LA DUREE EN SEMAINE-MOIS
 $pdf->wid("Et correspondant à ","$duree_totale heures de présence effective dans l'organisme d'accueil.",2,true);
-if(isset($duree_discontinue_par)){
-    $pdf->wid("Répartition si durée discontinue :", " $duree_discontinue par $duree_discontinue_par" );
-}
+// AJOUTER ICI LA REPARTITION SI DISCONTINUE
 // AJOUTER ICI LE COMMENTAIRE
 
 

@@ -232,7 +232,7 @@ function article($titre,$texte){
     $this->saut();
 }
 
-function dblCell($hauteur=5,$label,$input,$decalageint=0,$decalageext=0,$border=0,$lnInput=0,$ln=0, $align="L", $fill = 0){
+function dblCell($hauteur=5,$label,$input,$decalageint=0,$decalageext=0,$border=0,$lnInput=0,$ln=1, $align="L", $fill = 0){
 //function dblCell($largeur=0,$hauteur=5,$label,$input,$border=0,$ln=1,$align="L", $fill = 0,$color1=[0,0,0],$color2=[0,0,255]){
     $this->SetTextColor(0,0,0);
     $labelWidth = $this->GetStringWidth($label);
