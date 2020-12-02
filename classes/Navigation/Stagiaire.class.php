@@ -70,7 +70,14 @@ class Stagiaire{
                 <a class="nav-link <?=$this->linkTuteur?>" href="/Convention/index.php?controller=tuteur&task=liste&id=<?=$this->id?>">Tuteur</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?=$this->linkStage?>" href="/Convention/index.php?controller=stage&task=liste&id=<?=$this->id?>">Stage</a>
+                <div class="dropdown show">
+                    <a class="btn dropdown-toggle" href="#" role="button" data-toggle="dropdown">Stage<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Convention/index.php?task=liste&controller=Stage">Stage MscMba</a></li>
+                        <li><a href="/Convention/index.php?task=liste&controller=Stage_pbm">Stage Pbm</a></li>
+                    </ul>
+                <!-- <a class="nav-link <?=$this->linkStage?>" href="/Convention/index.php?controller=stage&task=liste&id=<?=$this->id?>">Stage</a> -->
+                </div>
             </li>
             <li class="nav-item">
                 <div class="dropdown show">

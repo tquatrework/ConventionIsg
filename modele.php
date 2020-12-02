@@ -585,7 +585,7 @@ function titre(){
     <div class="header">
             <div class ="logo">
                 <img src="/Convention/images/ISG_logo.jpg">
-                <h1>CONVENTION DE STAGE ETUDIANT MSC-MBA
+                <h1>CONVENTION DE STAGE ETUDIANT
                     <br/>
                     <span>Année universitaire 2020/21</span>
                 </h1>
@@ -636,7 +636,7 @@ function head(){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="/Convention/src/style.css"/>
-    <title>ISG convention de stage MSC-MBA</title> 
+    <title>ISG convention de stage</title> 
     <?php
 }
 

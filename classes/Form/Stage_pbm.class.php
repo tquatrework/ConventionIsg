@@ -1,7 +1,7 @@
 <?php
 namespace Form;
 use \PDO;
-class Stage extends Form{
+class Stage_pbm extends Form{
    
     public function __construct($dbh){
 	

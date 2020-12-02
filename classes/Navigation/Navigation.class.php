@@ -63,16 +63,15 @@ class Navigation{
                 <a class="nav-link <?=$this->linkTuteur?>" href="/Convention/index.php?task=liste&controller=tuteur">Tuteur</a>
             </li>
             <li class="nav-item">
-                <div class="dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Services</a> <!-- lien -->
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/Convention/index.php?task=liste&controller=stage">Stage-MscMba</a>
-                    <a class="dropdown-item" href="/Convention/index.php?task=liste&controller=stage-pbm">Stage-Pbm</a>
+                <div class="dropdown show">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Stage <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Convention/index.php?task=liste&controller=Stage">Stage MscMba</a></li>
+                        <li><a href="/Convention/index.php?task=liste&controller=Stage_pbm">Stage Pbm</a></li>
+                    </ul>
+                <!-- <a class="nav-link <?=$this->linkStage?>" href="/Convention/index.php?controller=stage&task=liste&id=<?=$this->id?>">Stage</a> -->
                 </div>
-                </div>    
-                <!-- <a class="nav-link <?=$this->linkStage?>" href="/Convention/index.php?task=liste&controller=stage">Stage</a> -->
-                
-                
+            </li>
             </li>
             <li class="nav-item">
                 <a class="nav-link <?=$this->linkEtablissement?>" href="/Convention/index.php?task=liste&controller=etablissement">Etablissement</a>
