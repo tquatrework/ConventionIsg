@@ -39,7 +39,7 @@ class Stagiaire{
                 elseif($file == "entreprise"){
                     $this->linkEntreprise = "active";
                 }
-                elseif($file == "stage"){
+                elseif($file == "stage" || $file == "stage_pbm"){
                     $this->linkStage = "active";
                 }
                 elseif($file == "tuteur"){
@@ -70,8 +70,8 @@ class Stagiaire{
                 <a class="nav-link <?=$this->linkTuteur?>" href="/Convention/index.php?controller=tuteur&task=liste&id=<?=$this->id?>">Tuteur</a>
             </li>
             <li class="nav-item">
-                <div class="dropdown show">
-                    <a class="btn dropdown-toggle" href="#" role="button" data-toggle="dropdown">Stage<span class="caret"></span></a>
+                <div > <!--class="dropdown show" -->
+                    <a class="btn dropdown-toggle nav-link" href="#" role="button" data-toggle="dropdown">Stage<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/Convention/index.php?task=liste&controller=Stage">Stage MscMba</a></li>
                         <li><a href="/Convention/index.php?task=liste&controller=Stage_pbm">Stage Pbm</a></li>

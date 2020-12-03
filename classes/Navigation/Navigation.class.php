@@ -34,7 +34,7 @@ class Navigation{
                     $this->linkEntreprise = "active";
                 }elseif($_GET["controller"] == "tuteur" ){
                     $this->linkTuteur ="active";
-                }elseif($_GET["controller"] == "stage"){
+                }elseif($_GET["controller"] == "stage" || $_GET["controller"] == "stage_pbm"){
                     $this->linkStage = "active";
                 }elseif($_GET["controller"] == "etablissement"){
                     $this->linkEtablissement ="active";
@@ -63,8 +63,8 @@ class Navigation{
                 <a class="nav-link <?=$this->linkTuteur?>" href="/Convention/index.php?task=liste&controller=tuteur">Tuteur</a>
             </li>
             <li class="nav-item">
-                <div class="dropdown show">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Stage <span class="caret"></span></a>
+                <div> <!-- class="dropdown show"> -->
+                    <a class="btn dropdown-toggle nav-link <?=$this->linkStage?>" data-toggle="dropdown" href="#" role="button">Stage <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/Convention/index.php?task=liste&controller=Stage">Stage MscMba</a></li>
                         <li><a href="/Convention/index.php?task=liste&controller=Stage_pbm">Stage Pbm</a></li>

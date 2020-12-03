@@ -1,13 +1,56 @@
 <?php
 //$pdf->SetAutoPageBreak(1,30);
 //--------Debut article 2-------------
-$pdf->article("Article 2 - Objectif du stage","Le stage correspond à une période temporaire de mise en situation en milieu professionnel au cours de laquelle l'étudiant(e) acquiert des compétences professionnelles et met en oeuvre les acquis de sa formation en vue de l'obtention d'un diplôme ou d'une certification et de favoriser son insertion professionnelle. Le stagiaire se voit confier une ou des missions conformes au projet pédagogique défini par son établissement d'enseignement et approuvées par l'organisme d'accueil.
-Le programme est établi par l'établissement d'enseignement et l'organisme d'accueil en fonction du programme général de la formation dispensée.");
-$pdf->ln();
-$pdf->Cell(60,5,utf8_decode("Intitulé du poste : "),0,1);
+
+$pdf->article("Article 2 - Objectif du stage","Le stage correspond à une période temporaire de mise en situation en milieu professionnel au cours de laquelle l'étudiant(e) acquiert des compétences professionnelles et met ainsi en oeuvre les acquis de sa formation en vue de l'obtention d'un diplôme ou d'une certification et de favoriser ainsi son insertion professionnelle.");
+
+$pdf->MultiCell(0,5,utf8_decode("Le STAGIAIRE se voit confier une ou des missions conformes au projet pédagogique défini par L'ÉTABLISSEMENTD'ENSEIGNEMENT et approuvées par l'ENTREPRISE D'ACCUEIL. Les tâches à réaliser sont établies par L'ÉTABLISSEMENTD'ENSEIGNEMENT et l'ENTREPRISE D'ACCUEIL en fonction du programme général de la formation dispensée."),0);
+
+$pdf->Ln();
+$pdf->Cell(60,5,utf8_decode("Titre du poste : "),0,1);
 $pdf->Cell(0,5,utf8_decode($intitule_poste),1,1);
-$pdf->ln();
-$pdf->Cell(60,5,utf8_decode("Activités confiées : "),0,1);
+$pdf->Ln();
+
+
+// DESCRIPTIF (dépend de l'année du stagiaire)
+$pdf->Cell(0,5,utf8_decode("Descriptif par année d'enseignement :"),0,1);
+$pdf->Ln();
+switch($classe){
+    case "ISG PBM - 1ere annee":
+        $pdf->SetFont('Arial',"B",10);
+        $pdf->Cell(0,5,utf8_decode("1re année - stage d'exécution - VHP602 (*)"),0,1);
+        $pdf->SetFont('Arial',"",10);
+        $pdf->Multicell(0,5,utf8_decode("Découverte de l'entreprise, de son secteur, de son organisation et de son environnement. Exemples de missions : vente, gestion du stock, manutention, chargé de mise en rayon, tenue de caisse, aide à la gestion d'une boutique, etc.)."),0);
+        $pdf->Ln();
+        $pdf->Cell(0,5,utf8_decode("(*) VHP : Volume Horaire Pédagogique"),0,1);    
+    break;
+
+    case "ISG PBM - 2eme annee":
+        $pdf->SetFont('Arial',"B",10);
+        $pdf->Cell(0,5,utf8_decode("2e année - Stage d'application – VHP 566 (*)"),0,1);
+        $pdf->SetFont('Arial',"",10);
+        $pdf->Multicell(0,5,utf8_decode("L'objectif pour l'étudiant est de mettre en application les connaissances et les compétences acquises à l'ISG. Ce stage doit lui permettre d'analyser la place qu'occupe un service ou une fonction au sein d'une entreprise."),0);
+        $pdf->Ln();
+        $pdf->Cell(0,5,utf8_decode("(*) VHP : Volume Horaire Pédagogique"),0,1);    
+    break;
+
+    case "ISG PBM - 3eme annee":
+        $pdf->SetFont('Arial',"B",10);
+        $pdf->Cell(0,5,utf8_decode("2e année - Stage d'application – VHP 566 (*)"),0,1);
+        $pdf->SetFont('Arial',"",10);
+        $pdf->Multicell(0,5,utf8_decode("L'objectif pour l'étudiant est de mettre en application les connaissances et les compétences acquises à l'ISG. Ce stage doit lui permettre d'analyser la place qu'occupe un service ou une fonction au sein d'une entreprise."),0);
+        $pdf->Ln();
+        $pdf->Cell(0,5,utf8_decode("(*) VHP : Volume Horaire Pédagogique"),0,1);
+    break;
+
+    default:
+    $pdf->SetTextColor(255,0,0);
+    $pdf->ligneLn("Aucune classe sélectionnée");
+    $pdf->SetTextColor(0,0,0);
+    }
+$pdf->saut();
+
+$pdf->Cell(60,5,utf8_decode("Activités / missions confiées : "),0,1);
 $pdf->MultiCell(0,5,utf8_decode($activites_missions),1);
 $pdf->ln();
 

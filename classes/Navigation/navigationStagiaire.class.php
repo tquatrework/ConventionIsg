@@ -39,7 +39,7 @@ class NavigationStagiaire{
                 elseif($file == "entreprise"){
                     $this->linkEntreprise = "active";
                 }
-                elseif($file == "stage"){
+                elseif($file == "stage" || $file == "stage-pbm"){
                     $this->linkStage = "active";
                 }
                 elseif($file == "tuteur"){

@@ -50,12 +50,16 @@ class Stagiaire extends Form{
             <div class="form-group col-md-<?=$col?>">
                     <label for="classe">Classe</label>
                     <select name="classe" required id="classe" class="form-control" style="background-color:#e8f0ff">
-                        <?php if(!empty($this->tab["classe"])){
+                        <?php 
+                        if(!empty($this->tab["classe"])){
                             echo "<option selected value='".$this->tab["classe"]."'>".$this->tab["classe"]."</option>";
                         }else{
                             echo "<option value=''></option>";
-                        }
+                        }                        
                         ?>
+                        <option value="ISG PBM - 1ere annee">ISG PBM - 1ère année</option>
+                        <option value="ISG PBM - 2eme annee">ISG PBM - 2ème année</option>
+                        <option value="ISG PBM - 3eme annee">ISG PBM - 3ème année</option>
                         <option value="MSC Finance 1ere annee – Finance de Marché>MSC Finance 1ère année – Finance de Marché</option>
                         <option value="MSC Finance 1ere annee – Corporate Finance>MSC Finance 1ère année – Corporate Finance</option>
                         <option value="MSC Finance 1ere annee – Audit et contrôle de gestion>MSC Finance 1ère année – Audit et contrôle de gestion</option>
@@ -76,7 +80,7 @@ class Stagiaire extends Form{
                         <option value="MBA Food, food tech et branding>MBA Food, food tech & branding</option>
                         <option value="MBA Supply Chain Management, achats et développement durable>MBA Supply Chain Management, achats et développement durable</option>
                         <option value="MBA Sport business, gaming et E-Sport>MBA Sport business, gaming & E-Sport</option>
-                        <option value="MBA Economie collaborative, durable, RSE>MBA Economie collaborative, durable, RSE</option>
+                        <option value="MBA Economie collaborative, durable, RSE">MBA Economie collaborative, durable, RSE</option>
 
                     </select>
                 </div>
