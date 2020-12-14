@@ -14,6 +14,7 @@ class Stage_pbm extends Form{
         //$this->id();
         //$this->logic($dbh,",id_stagiaire",",".$this->id);
 
+
         $this->page = $_GET["controller"];
         $this->id();
         if(isset($_GET["id_".$this->page])){
@@ -107,6 +108,9 @@ class Stage_pbm extends Form{
                 <?php
                 $this->activiteMission();
                 $this->competence();
+                $this->type_stage();
+                //echo "<div> test </div>";
+                //echo "<input id="type_stage" class="form-control" name="type_stage" type="hidden" value="PBM">";
                 echo "<br/>";
                 $this->button();
                 ?>
@@ -611,6 +615,18 @@ class Stage_pbm extends Form{
         <?php
     }
 
+
+    public function type_stage(){
+        ?>
+        <div class="form-row">
+            <div class="form-group col-md-<?=$col?>">
+                <input class="form-control" id="type_stage" name="type_stage" type="hidden" value="PBM" />
+            <!-- <textarea class="form-control" style="background-color:#e8f0ff" id="type_stage" name="type_stage" value="MSCMBA" style="display:none;"></textarea> -->
+            </div>
+        </div>
+        <?php
+    }
+
     public function textArea($nom,$id,$name,$value,$idLabel,$hidden = "",$col = 8){
         if($name == "droit_avantage" || $name == "conditions_remboursement" || $name == "modalite_conge" || $name == "cas_particulier"){
             $required = "";
@@ -640,7 +656,7 @@ class Stage_pbm extends Form{
         ?>
         <div class="form-row">
             <label class="col-md-8">
-                Pour les stages dont la durée est supérieur à deux mois et dans la limite de la durée maximal de six mois, des congés ou autorisation d'absence sont possibles.<br/>
+                Pour les stages dont la durée est supérieure à deux mois et dans la limite de la durée maximal de six mois, des congés ou autorisation d'absence sont possibles.<br/>
                 <br/>
                 Avez-vous des jours de congés ?
             </label>

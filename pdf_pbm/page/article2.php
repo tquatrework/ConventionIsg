@@ -4,7 +4,7 @@
 
 $pdf->article("Article 2 - Objectif du stage","Le stage correspond à une période temporaire de mise en situation en milieu professionnel au cours de laquelle l'étudiant(e) acquiert des compétences professionnelles et met ainsi en oeuvre les acquis de sa formation en vue de l'obtention d'un diplôme ou d'une certification et de favoriser ainsi son insertion professionnelle.");
 
-$pdf->MultiCell(0,5,utf8_decode("Le STAGIAIRE se voit confier une ou des missions conformes au projet pédagogique défini par L'ÉTABLISSEMENTD'ENSEIGNEMENT et approuvées par l'ENTREPRISE D'ACCUEIL. Les tâches à réaliser sont établies par L'ÉTABLISSEMENTD'ENSEIGNEMENT et l'ENTREPRISE D'ACCUEIL en fonction du programme général de la formation dispensée."),0);
+$pdf->MultiCell(0,5,utf8_decode("Le STAGIAIRE se voit confier une ou des missions conformes au projet pédagogique défini par L'ÉTABLISSEMENT D'ENSEIGNEMENT et approuvées par l'ENTREPRISE D'ACCUEIL. Les tâches à réaliser sont établies par L'ÉTABLISSEMENT D'ENSEIGNEMENT et l'ENTREPRISE D'ACCUEIL en fonction du programme général de la formation dispensée."),0);
 
 $pdf->Ln();
 $pdf->Cell(60,5,utf8_decode("Titre du poste : "),0,1);
@@ -14,7 +14,6 @@ $pdf->Ln();
 
 // DESCRIPTIF (dépend de l'année du stagiaire)
 $pdf->Cell(0,5,utf8_decode("Descriptif par année d'enseignement :"),0,1);
-$pdf->Ln();
 switch($classe){
     case "ISG PBM - 1ere annee":
         $pdf->SetFont('Arial',"B",10);

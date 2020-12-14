@@ -44,7 +44,6 @@ $pdf->wid("La société ou organisme d'accueil : ", $nom_entreprise,-4);
 $pdf->widIf($pdf,"Adresse : ",$numero_rue_entreprise,$adresse_entreprise,"",1);
 $pdf->widIf($pdf,"Code postal et ville : ",$code_postal_entreprise,$ville_entreprise,"",1);
 $pdf->widIf($pdf,"Représentée par : ", $nom_representant_entreprise, $prenom_representant_entreprise,"",-4);
-$pdf->wid("Qualité du représentant : ", $qualite_representant_entreprise);
 $pdf->wid("Fonction du représentant : ", $fonction_representant_entreprise);
 $pdf->wid("Secteur d'activité : ", $secteur_activite_entreprise,-1,false,0,false);
 $pdf->wid("Service dans lequel le stage sera effectué : ", $services_entreprise);
@@ -75,7 +74,7 @@ $pdf->Cell(5,"Intitulé du cursus suivi dans l'établissement : Programme Busine
 $pdf->Ln();
 
 /// CHANGEMENT DE PAGE ///
-$pdf->AddPage("P","A4");
+// $pdf->AddPage("P","A4");
 /// CHANGEMENT DE PAGE ///
 
 $pdf->Ln();
@@ -103,6 +102,7 @@ Si le STAGIAIRE doit être présent dans l'ENTREPRISE D'ACCUEIL la nuit, le dima
 La durée du stage dans l'ENTREPRISE D'ACCUEIL est, selon les années d'enseignement concernées, d'un minimum d'un mois et ne peut dépasser 6 mois au même poste, dans la même ENTREPRISE D'ACCUEIL, par année d'enseignement."),0,"J");
 $pdf->Ln();
 
+$pdf->AddPage("P","A4");
 //---------Début tableau encadrement----------
 $pdf->SetWidths(array(92,92));// Configuration du tableau
 $pdf->Row(array("ENCADREMENT DU STAGIAIRE PAR L'ETABLISSEMENT ","ENCADREMENT DU STAGIAIRE PAR L'ORGANISME D'ACCUEIL"));

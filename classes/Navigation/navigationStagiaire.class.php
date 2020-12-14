@@ -70,7 +70,7 @@ class NavigationStagiaire{
                 <a class="nav-link <?=$this->linkTuteur?>" href="/Convention/index.php?controller=tuteur&task=liste&id=<?=$this->id?>">Tuteur</a>
             </li>
             <li class="nav-item">
-                <div class="dropdown show">
+                <div class> <!--="dropdown show"> -->
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Stage <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/Convention/index.php?task=liste&controller=Stage">Stage MscMba</a></li>

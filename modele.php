@@ -577,7 +577,7 @@ function redirect($page){
 }
 
 function refresh($refresh,$url){
-    header( "Refresh:$refresh; url=http://www.convention.isgbx.fr/Convention/$url", true, 303);
+    header( "Refresh:$refresh; url=http://www.convention.isgbx.fr/Convention/$url", true);
 }
 
 function titre(){
