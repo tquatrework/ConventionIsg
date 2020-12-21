@@ -14,12 +14,12 @@ class Stage_pbm extends Form{
         //$this->id();
         //$this->logic($dbh,",id_stagiaire",",".$this->id);
 
-
         $this->page = $_GET["controller"];
         $this->id();
-        if(isset($_GET["id_".$this->page])){
-            if(isset($_POST["envoi_".$this->page])){
-
+        //if(isset($_GET["id_".$this->page])){
+        //    if(isset($_POST["envoi_".$this->page])){
+        if(isset($_GET["id_stage"])){
+            if(isset($_POST["envoi_stage"])){
                 if(empty($_POST["fk_tuteur_stage"]) || empty($_POST["fk_referent_stage"])){
                     echo "<div class='alert alert-danger col-md-auto d-inline-block'>Veillez remplir les champs Référent et/ou Tuteur</div>";
                 }else{
@@ -33,7 +33,8 @@ class Stage_pbm extends Form{
             
         }else{
             
-            if(isset($_POST["envoi_".$this->page])){
+            //if(isset($_POST["envoi_".$this->page])){
+            if(isset($_POST["envoi_stage"])){
                 
                 if(empty($_POST["fk_tuteur_stage"]) || empty($_POST["fk_referent_stage"])){
                     echo "<div class='alert alert-danger col-md-auto d-inline-block'>Veillez remplir les champs Référent et/ou Tuteur</div>";

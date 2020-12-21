@@ -11,7 +11,8 @@ class Stage extends Model
     public $table = "stage";
 
     function findAll() {
-        $request = "SELECT * FROM {$this->table} ORDER BY date_debut DESC LIMIT 5 ";
+        $request = "SELECT * FROM {$this->table} ORDER BY date_debut 
+                    WHERE type_stage='MSCMBA' DESC LIMIT 5 ";
         return Utils::tryFetch($request,1);
     }
 

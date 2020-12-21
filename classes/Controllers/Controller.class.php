@@ -26,8 +26,10 @@ class Controller
 
     public function show()
     {
+
         $form = "\Form\\" . $this->page;
         $card = new $form($this->dbh);
+
     }
 
     public function recupPassword(){

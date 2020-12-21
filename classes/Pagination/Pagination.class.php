@@ -27,7 +27,7 @@ class Pagination{
             $request1 = 'SELECT * FROM tuteur INNER JOIN entreprise ON entreprise.id_entreprise = tuteur.fk_entreprise WHERE nom_tuteur LIKE "%:recherche%" || prenom_tuteur LIKE "%:recherche%" || nom_entreprise LIKE "%:recherche%" || CONCAT(nom_tuteur," ",prenom_tuteur) LIKE ":recherche%" || CONCAT(prenom_tuteur," ",nom_tuteur) LIKE ":recherche%"';
             $request2 = 'SELECT * FROM tuteur INNER JOIN entreprise ON entreprise.id_entreprise = tuteur.fk_entreprise';
             $request3 = 'SELECT * FROM tuteur INNER JOIN entreprise ON entreprise.id_entreprise = tuteur.fk_entreprise WHERE fk_utilisateur_tuteur = :id';
-        }elseif($file == "stage"){
+        }elseif($file == "stage" || $file == "Stage" || $file == "Stage_pbm"){
             $request1 = 'SELECT * FROM stage
             INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
             INNER JOIN tuteur ON tuteur.id_tuteur = stage.fk_tuteur_stage

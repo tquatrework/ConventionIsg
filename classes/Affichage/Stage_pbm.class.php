@@ -70,19 +70,21 @@ class Stage_pbm extends Affichage{
                 if(!empty($resultNomEntreprise["nom_entreprise"])){
                     $this->ligne2 = $this->iconEntreprise." ".$resultNomEntreprise["nom_entreprise"];
                 }
+                // TOUT CHANGER AVEC id_stage_pbm ???
                 if(isset($_GET["id"])){
-                    $this->lien_modification = "/Convention/index.php?id_stage=".$tab['id_stage']."&id=".$_GET["id"]."&task=show&controller=stage";
+                    $this->lien_modification = "/Convention/index.php?id_stage=".$tab['id_stage']."&id=".$_GET["id"]."&task=show&controller=stage_pbm";
                 }else{
-                    $this->lien_modification = "/Convention/index.php?id_stage=".$tab['id_stage']."&task=show&controller=stage";
+                    $this->lien_modification = "/Convention/index.php?id_stage=".$tab['id_stage']."&task=show&controller=stage_pbm";
                 }
-                $this->lien_suppression = "/Convention/index.php?id_stage=".$tab['id_stage']."&controller=stage&task=supprimer&token=".$_SESSION["token"];
-                $this->lien_validation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage&task=validation";
-                $this->lien_confirmation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage&task=confirmation";
+                $this->lien_suppression = "/Convention/index.php?id_stage=".$tab['id_stage']."&controller=stage_pbm&task=supprimer&token=".$_SESSION["token"];
+                $this->lien_validation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage_pbm&task=validation";
+                $this->lien_confirmation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage_pbm&task=confirmation";
                 $this->lien_pdf = "pdf_pbm/pdf.php?id_stage=".$tab["id_stage"];
                 $this->card(); 
                 $this->reset();
                 echo "<br/>";
             }
+            //var_dump($dbh);
             $page = new \Pagination\Pagination($dbh);
         }
     } 

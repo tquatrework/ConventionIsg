@@ -49,20 +49,34 @@ class Form{
     }
 
     public function fetchTable($dbh,$bool = false,$requestAll = false){
-        if($requestAll == true) {
-            $request = 'SELECT * FROM '.$this->page.'';
-        }else{
-            $request = 'SELECT * FROM '.$this->page.' WHERE id_'.$_GET["controller"].' = :id';
+
+       if($this->page == 'Stage' || $this->page == 'Stage_pbm' || $this->page == 'stage' || $this->page == 'stage_pbm'){
+            $tabrequest ='stage';
+            $ctrlrequest = 'stage';
+        }
+        else {
+            $tabrequest=$this->page;
+            $ctrlrequest = $_GET["controller"];
         }
 
+        if($requestAll == true) {
+            $request = 'SELECT * FROM '.$tabrequest.'';
+        }else{
+            $request = 'SELECT * FROM '.$tabrequest.' WHERE id_'.$ctrlrequest.' = :id';
+        }
+        
         try {
             $sth = $dbh->prepare($request);
             if($_GET["controller"] == "stagiaire"){
                 $sth->bindValue(":id",$this->id);
+            }          
+            elseif($_GET["controller"] =="stage_pbm"){
+                $sth->bindValue(":id",$_GET["id_stage"]);
             }
             elseif(isset($_GET["id_".$_GET["controller"]])){
                 $sth->bindValue(":id",$_GET["id_".$_GET["controller"]]);
-            }else{
+            }
+            else{
                 $sth->bindValue(":id","");
             }
             $sth->execute();
