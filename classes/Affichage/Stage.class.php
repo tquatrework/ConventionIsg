@@ -12,35 +12,40 @@ class Stage extends Affichage{
  
         $this->requestId = 'SELECT * FROM stage
                             INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
-                            WHERE fk_utilisateur_stage = :id 
+                            WHERE fk_utilisateur_stage = :id
+                            && type_stage="MSCMBA"
                             ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $this->requestRecherche = 'SELECT * FROM stage
                                 INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
                                 INNER JOIN tuteur ON tuteur.id_tuteur = stage.fk_tuteur_stage
                                 INNER JOIN entreprise ON tuteur.fk_entreprise = entreprise.id_entreprise
-                                WHERE nom_stagiaire LIKE CONCAT("%",:recherche,"%") 
+                                WHERE (nom_stagiaire LIKE CONCAT("%",:recherche,"%") 
                                 || prenom_stagiaire LIKE CONCAT("%",:recherche,"%") 
                                 || nom_entreprise LIKE CONCAT("%",:recherche,"%") 
                                 || CONCAT(nom_stagiaire," ",prenom_stagiaire) LIKE CONCAT(:recherche,"%") 
                                 || CONCAT(prenom_stagiaire," ",nom_stagiaire) LIKE CONCAT(:recherche,"%") 
                                 || classe LIKE CONCAT(:recherche,"%") 
                                 || classe LIKE CONCAT("%",:recherche,"%") 
-                                || classe LIKE CONCAT("%",:recherche) 
+                                || classe LIKE CONCAT("%",:recherche))
+                                && type_stage="MSCMBA"
                                 ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $this->requestAll = 'SELECT * FROM stage
                             INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
+                            WHERE type_stage="MSCMBA"
                             ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $this->requestFiltreAttente = 'SELECT * FROM stage
                                 INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
                                 WHERE statut = "en attente de validation"
+                                && type_stage="MSCMBA"
                                 ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $this->requestFiltreValide = 'SELECT * FROM stage
                                 INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
                                 WHERE statut = "Stage validé"
+                                && type_stage="MSCMBA"
                                 ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $tabResult = $this->select($dbh,"Liste des stages","Aucun stage");

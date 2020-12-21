@@ -176,13 +176,21 @@ class Form{
     }
 
     public function insert($dbh,$idLabel,$id){
+        if($this->page=="Stage" || $this->page=="Stage_pbm"){
+            //if(0==1){
+            $tabrequete = "stage";
+        }         
+        else {
+            $tabrequete = $this->page;
+        }
         $keyString = "(";
         $valueString = "(";
         $compteur = 0;
+        //var_dump($_POST);
         foreach($_POST as $key=>$value){
             if($key == "envoi_".$this->page){continue;}            
-            if($key == "token"){continue;}            
-            $tabResult = $this->champExist($dbh,$this->page,$key);
+            if($key == "token"){continue;} 
+            $tabResult = $this->champExist($dbh,$tabrequete,$key);
             if($tabResult == 0){continue;}
             if($compteur == 0){
                 $keyString .= "$key";
@@ -195,30 +203,38 @@ class Form{
         }
         $keyString .= "$idLabel)";
         $valueString .= "$id)";
-        $request = 'INSERT INTO '.$this->page.' '.$keyString.' VALUES '.$valueString.'';
+        $request = 'INSERT INTO '.$tabrequete.' '.$keyString.' VALUES '.$valueString.'';
+        //echo $request;
         $this->tryCatch($dbh,$request);
         echo "<div class='alert alert-success col-md-auto d-inline-block'>ajout ".ucfirst($this->page)." effectué</div>";
     }
 
     public function update($dbh){
         $compteur = 0;
+        if($this->page=="Stage" || $this->page=="Stage_pbm"){
+            //if(0==1){
+            $tabrequete = "stage";
+        }         
+        else {
+            $tabrequete = $this->page;
+        }
         //Faire en sorte que les jours de la semaine ont une valeur non NULL
-        if($this->page == "stage"){
+        if($this->page == "stage" or $this->page == "stage_pbm"){
             $array = array("lundi","mardi","mercredi","jeudi","vendredi","samedi");
             foreach($array as $cle=>$valeur){
                 if(isset($_POST[$valeur])){continue;}
-                $request = 'UPDATE '.$this->page.' SET '.$valeur.' = "" WHERE id_'.$_GET["controller"].' = :id';
+                $request = 'UPDATE '.$tabrequete.' SET '.$valeur.' = "" WHERE id_'.$_GET["controller"].' = :id';
                 $this->tryCatch($dbh,$request);
             }
         }
         // Parcours de POST et update la valeur si elle existe et est différent
         foreach($_POST as $key=>$value){
             if($key == "envoi_".$this->page || $key == "token"){continue;}
-            $request = 'SELECT '.$key.' FROM '.$this->page.' WHERE id_'.$_GET["controller"].' = :id';
+            $request = 'SELECT '.$key.' FROM '.$tabrequete.' WHERE id_'.$_GET["controller"].' = :id';
             $tabResult = $this->tryCatch($dbh,$request,true);
             if(!$tabResult || $tabResult[$key] == $value){continue;}
 
-            $request = 'UPDATE '.$this->page.' SET '.$key.' = "'.$value.'" WHERE id_'.$_GET["controller"].' = :id';
+            $request = 'UPDATE '.$tabrequete.' SET '.$key.' = "'.$value.'" WHERE id_'.$_GET["controller"].' = :id';
             $this->tryCatch($dbh,$request);
         }
         $compteur ++;

@@ -64,7 +64,6 @@ class Model
         $valueString = "(";
         $compteur = 0;
 
-            var_dump($_POST);
         foreach($_POST as $key=>$value){
             $tabResult = $this->champExist($this->table,$key);
             if($tabResult > 0){
@@ -86,7 +85,7 @@ class Model
             $keyString .= ")";
             $valueString .= ")";
         }
-
+        
         $request = 'INSERT INTO '.$this->table.' '.$keyString.' VALUES '.$valueString.'';
         Utils::tryPrepare($request);
 

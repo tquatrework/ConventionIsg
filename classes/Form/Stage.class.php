@@ -37,7 +37,7 @@ class Stage extends Form{
                 if(empty($_POST["fk_tuteur_stage"]) || empty($_POST["fk_referent_stage"])){
                     echo "<div class='alert alert-danger col-md-auto d-inline-block'>Veillez remplir les champs Référent et/ou Tuteur</div>";
                 }else{
-                    $this->insert($dbh,",fk_utilisateur_".$this->page,",".$this->id);
+                    $this->insert($dbh,",fk_utilisateur_"."stage",",".$this->id);
                 }
                 $bool = 0;
             }else{
