@@ -7,7 +7,7 @@ $pdf->ligneLn("Article 5 - Gratification, avantages");
 $pdf->normal();
 
 
-$pdf->mLigne("La gratification est due lorsque la présence du stagiaire dans l'ENTREPRISE D'ACCUEIL est supérieure à deux mois, soit l'équivalent de 44 jours (sur la base de 7 heures par jour), consécutifs ou non, sauf en cas de règles particulières applicables dans certaines collectivités d'outre‐mer françaises et pour les stages relevant de l'article L4381‐1 du code de la santé publique. En dessous de ce seuil de durée, la gratification reste facultative pour l'ENTREPRISE D'ACCUEIL.");
+$pdf->mLigne("La gratification est due lorsque la présence du stagiaire dans l'ENTREPRISE D'ACCUEIL est supérieure à deux mois, soit l'équivalent de 44 jours (sur la base de 7 heures par jour), consécutifs ou non, sauf en cas de règles particulières applicables dans certaines collectivités d'outre-mer françaises et pour les stages relevant de l'article L4381-1 du code de la santé publique. En dessous de ce seuil de durée, la gratification reste facultative pour l'ENTREPRISE D'ACCUEIL.");
 $pdf->mLigne("Cette gratification doit être versée mensuellement à compter du 1er jour du 1er mois de stage.");
 $pdf->mLigne("Afin de calculer le montant de la gratification, l'organisme d'accueil doit décompter le nombre d'heures de présence effective du stagiaire.");
 $pdf->mLigne("L'organisme peut décider de verser une gratification pour les stages dont la durée est inférieure ou égale à deux mois.");
@@ -61,10 +61,10 @@ $pdf->gras();
 $pdf->ligneLn("Article 5 bis - Accès aux droits des salariés - Avantages");
 $pdf->normal();
 
-$pdf->mLigne("(Organisme/entreprise d'accueil de droit privé en France sauf en cas de règles particulières applicables dans certaines collectivités d'outre‐mer françaises) :");
-$pdf->mLigne("Le STAGIAIRE bénéficie des protections et droits mentionnés aux articles L.1121‐1, L.1152‐1 et L.1153‐1 du code du travail, dans les mêmes conditions que les salariés.");
-$pdf->mLigne("Le STAGIAIRE a accès au restaurant d'entreprise d'accueil ou aux titres‐restaurants prévus à l'article L.3262‐1 du code du travail, dans les mêmes conditions que les salariés de l'ENTREPRISE D'ACCUEIL. Il bénéficie également de la prise en charge des frais de transport prévue à l'article L.3261‐2 du même code.");
-$pdf->mLigne("Le STAGIAIRE accède aux activités sociales et culturelles mentionnées à l'article L.2323‐83 du code du travail dans les mêmes conditions que les salariés.");
+$pdf->mLigne("(Organisme/entreprise d'accueil de droit privé en France sauf en cas de règles particulières applicables dans certaines collectivités d'outre-mer françaises) :");
+$pdf->mLigne("Le STAGIAIRE bénéficie des protections et droits mentionnés aux articles L.1121-1, L.1152-1 et L.1153-1 du code du travail, dans les mêmes conditions que les salariés.");
+$pdf->mLigne("Le STAGIAIRE a accès au restaurant d'entreprise d'accueil ou aux titres-restaurants prévus à l'article L.3262-1 du code du travail, dans les mêmes conditions que les salariés de l'ENTREPRISE D'ACCUEIL. Il bénéficie également de la prise en charge des frais de transport prévue à l'article L.3261-2 du même code.");
+$pdf->mLigne("Le STAGIAIRE accède aux activités sociales et culturelles mentionnées à l'article L.2323-83 du code du travail dans les mêmes conditions que les salariés.");
 $pdf->saut();
 
 

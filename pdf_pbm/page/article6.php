@@ -21,7 +21,7 @@ $pdf->gras();
 $pdf->ligneLn("6.1 Gratification d'un montant maximum de 15% du plafond horaire de la sécurité sociale");
 $pdf->normal();
 $pdf->mLigne("La gratification n'est pas soumise à cotisation sociale.");
-$pdf->mLigne("Le STAGIAIRE bénéficie de la législation sur les accidents de travail au titre du régime étudiant de l'article L.412‐8 2° du code 
+$pdf->mLigne("Le STAGIAIRE bénéficie de la législation sur les accidents de travail au titre du régime étudiant de l'article L.412-8 2° du code 
 de la sécurité sociale.");
 $pdf->mLigne("En cas d'accident survenant au STAGIAIRE, soit au cours d'activités dans l'ENTREPRISE D'ACCUEIL, soit au cours du trajet, soit sur les lieux rendus 
 utiles pour les besoins du stage, l'ENTREPRISE D'ACCUEIL envoie la déclaration à la Caisse Primaire d'Assurance Maladie ou la caisse compétente 

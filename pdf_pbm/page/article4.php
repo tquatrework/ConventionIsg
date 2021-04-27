@@ -11,7 +11,7 @@ $pdf->mLigne("Le tuteur de stage désigné par l'ENTREPRISE D'ACCUEIL dans la pr
 //$pdf->page($pdf,255);
 $pdf->mLigne("Le STAGIAIRE est autorisé à revenir dans son ETABLISSEMENT D'ENSEIGNEMENT pendant la durée du stage pour y suivre des cours demandés explicitement par le programme, ou pour participer à des réunions ; les dates sont portées à la connaissance de l'ENTREPRISE D'ACCUEIL par L'ÉTABLISSEMENT D'ENSEIGNEMENT. L'ENTREPRISE s'engage à libérer le stagiaire pour qu'il puisse y assister.");
 //$pdf->page($pdf,255);
-$pdf->mLigne("Toute difficulté survenue dans la réalisation et le déroulement du stage, qu'elle soit constatée par le STAGIAIRE ou par le tuteur de stage, doit être portée à la connaissance de l'enseignant‐référent et de L'ÉTABLISSEMENT D'ENSEIGNEMENT afin d'être résolue au plus vite.");
+$pdf->mLigne("Toute difficulté survenue dans la réalisation et le déroulement du stage, qu'elle soit constatée par le STAGIAIRE ou par le tuteur de stage, doit être portée à la connaissance de l'enseignant-référent et de L'ÉTABLISSEMENT D'ENSEIGNEMENT afin d'être résolue au plus vite.");
 
 $pdf->saut();
 //$pdf->page($pdf,255);

@@ -1,9 +1,9 @@
 <?php
 
 $pdf->gras();
-$pdf->ligneLn("Article 11 ‐ Devoir de réserve et confidentialité");
+$pdf->ligneLn("Article 11 - Devoir de réserve et confidentialité");
 $pdf->normal();
-$pdf->mLigne("Le devoir de réserve est de rigueur absolue et apprécié par l'ENTREPRISE D'ACCUEIL compte‐tenu de ses spécificités. 
+$pdf->mLigne("Le devoir de réserve est de rigueur absolue et apprécié par l'ENTREPRISE D'ACCUEIL compte-tenu de ses spécificités. 
 Le STAGIAIRE prend donc l'engagement de n'utiliser en aucun cas les informations recueillies ou obtenues par eux 
 pour en faire publication, communication à des tiers sans accord préalable de l'ENTREPRISE D'ACCUEIL, y compris le rapport de stage. 
 Cet engagement vaut non seulement pour la durée du stage mais également après son expiration. Le STAGIAIRE s'engage à ne conserver, 

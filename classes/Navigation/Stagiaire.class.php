@@ -53,7 +53,10 @@ class Stagiaire{
                 $label = $this->nom." ".$this->prenom;
             }
             
-            $this->nav($label,$href);
+            $this->nav($label,$href);            
+            if($_GET["controller"] == "entreprise" && $_SESSION["profile"] == "etudiant" && !isset($_GET["id_entreprise"])){
+                rechercher();
+            }
         }
     }
 

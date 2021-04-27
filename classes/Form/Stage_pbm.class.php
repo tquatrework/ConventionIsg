@@ -2,26 +2,16 @@
 namespace Form;
 use \PDO;
 class Stage_pbm extends Form{
-   
-    public function __construct($dbh){
-	
-        //Initialisation
-        //$this->page = "stagiaire";
-        //$this->idPage = "id_stagiaire";
-        //$this->tab = $this->fetchStagiaire($dbh);
 
-        //Update ou Insert
-        //$this->id();
-        //$this->logic($dbh,",id_stagiaire",",".$this->id);
+    public function __construct($dbh){
 
         $this->page = $_GET["controller"];
         $this->id();
-        //if(isset($_GET["id_".$this->page])){
-        //    if(isset($_POST["envoi_".$this->page])){
         if(isset($_GET["id_stage"])){
             if(isset($_POST["envoi_stage"])){
+
                 if(empty($_POST["fk_tuteur_stage"]) || empty($_POST["fk_referent_stage"])){
-                    echo "<div class='alert alert-danger col-md-auto d-inline-block'>Veillez remplir les champs Référent et/ou Tuteur</div>";
+                    echo "<div class='alert alert-danger col-md-auto d-inline-block'>Veuillez remplir les champs Référent et/ou Tuteur</div>";
                 }else{
                     $this->update($dbh);
                 }
@@ -30,15 +20,14 @@ class Stage_pbm extends Form{
             $bool = 1;
             $this->titre_form = "Modification";
             $this->tab = $this->fetchTable($dbh);
-            
+
         }else{
-            
-            //if(isset($_POST["envoi_".$this->page])){
+
             if(isset($_POST["envoi_stage"])){
-                
+     
                 if(empty($_POST["fk_tuteur_stage"]) || empty($_POST["fk_referent_stage"])){
-                    echo "<div class='alert alert-danger col-md-auto d-inline-block'>Veillez remplir les champs Référent et/ou Tuteur</div>";
-                }else{
+                    echo "<div class='alert alert-danger col-md-auto d-inline-block'>Veuillez remplir les champs Référent et/ou Tuteur</div>";
+                }else{				
                     $this->insert($dbh,",fk_utilisateur_"."stage",",".$this->id);
                 }
                 $bool = 0;
@@ -46,14 +35,14 @@ class Stage_pbm extends Form{
                 $bool = 1;
                 $this->titre_form = "Ajout";
             }
-
         }
-
 
         if($bool == 1){
             ?>
-            <h3><?=$this->titre_form?> stage</h3>
-            <form action="" method="post"  novalidate>
+            <h3><?=$this->titre_form?> stage</h3>           
+            <!-- novalidate = disable the browser default feedback tootips -->
+            <!-- needs-validation = submit button is disable if this form is not valid -->
+            <form action="" method="post" novalidate>
                 <div class="form-row">
                     <?php
                     $this->anneeUniversitaire();
@@ -76,11 +65,10 @@ class Stage_pbm extends Form{
                     $this->dureeSemaineMois();
                     $this->dureeTotale();
                     $this->dureeDiscontinue();
-                    #$this->repartitionSiDiscontinue();
-                    //$this->commentaireDuree();
+                    //$this->repartitionSiDiscontinue();
+                    $this->commentaireDuree();
                     ?>
                 </div>
-
                 <br/>
                 <div class="form-row col-md-8 justify-content-between" style="padding-left:0;padding-right:0">
                     <?php
@@ -107,11 +95,10 @@ class Stage_pbm extends Form{
                 <hr/>
                 <h4>Objectifs du stage</h4>
                 <?php
+		        $this->intitulePoste();
                 $this->activiteMission();
                 $this->competence();
                 $this->type_stage();
-                //echo "<div> test </div>";
-                //echo "<input id="type_stage" class="form-control" name="type_stage" type="hidden" value="PBM">";
                 echo "<br/>";
                 $this->button();
                 ?>
@@ -119,7 +106,7 @@ class Stage_pbm extends Form{
             <?php
         }
     }
-    
+
     public function fermeture(){
         $tab = $this->ifCheck($this->tab["fermeture_entreprise"],"on","off");
         $checkedOui = $tab[0];
@@ -201,8 +188,8 @@ class Stage_pbm extends Form{
         </div>
         <br/>
         <?php
-
     }
+
 
     public function service(){
         ?>
@@ -218,7 +205,7 @@ class Stage_pbm extends Form{
          ?>
 	    <?php
 	    $idAnnee = $this->tab["annee_universitaire"];
-	    $tabAnnee = array("2019-20","2020-21","2021-22","2022-23");
+	    $tabAnnee = array("2020-21","2021-22","2022-23");
 	    ?>
 	    <div class="form-group col-md-4 ">
 
@@ -246,7 +233,6 @@ class Stage_pbm extends Form{
         $request ='SELECT * FROM etablissement';
         $array = array('');
         $tabEtablissement = $this->tryPrepareAll($dbh,$request,$array,true);
-
         ?>
         <div class="form-group col-md-4 ">
         <label for="etablissement">Etablissement</label>
@@ -254,7 +240,7 @@ class Stage_pbm extends Form{
                 <option value=""></option>
                 <?php
                 foreach ($tabEtablissement as $key => $value) {
-                    
+                 
                     $selected = $this->selected($idEtablissement,$value["id_etablissement"]);
                     ?>
                     <option <?=$selected?> value="<?=$value['id_etablissement']?>"><?=$value["nom_etablissement"]?></option>
@@ -265,7 +251,7 @@ class Stage_pbm extends Form{
         </div>
         <?php
     }
-    
+
     public function referent($dbh){
 
         $idEtablissement = $this->requestFk($dbh,"fk_enseignement_referent","referent","id_referent",$this->tab["fk_referent_stage"],"fk_enseignement_referent");
@@ -285,7 +271,6 @@ class Stage_pbm extends Form{
                     ?>
                     <option <?=$selected?> value="<?=$value['id_referent']?>"><?=$value["nom_referent"].' '.$value["prenom_referent"]?></option>;
                     <?php
-
                 }
                 ?>
             </select>
@@ -296,8 +281,11 @@ class Stage_pbm extends Form{
     public function entreprise($dbh){
 
         $idEntreprise = $this->requestFk($dbh,"fk_entreprise","tuteur","id_tuteur",$this->tab["fk_tuteur_stage"],"fk_entreprise");
-        $request = 'SELECT * FROM entreprise WHERE fk_utilisateur_entreprise = :id';
-        if($_SESSION["profile"] == "administrateur" && empty($_GET["id"])){
+        $request = 'SELECT * FROM entreprise WHERE fk_utilisateur_entreprise = :id
+                    UNION
+                    SELECT * FROM entreprise WHERE statut_entreprise = "permanente"
+                   ';
+                           if($_SESSION["profile"] == "administrateur" && empty($_GET["id"])){
             $id = $this->tab["fk_utilisateur_stage"];
         }else{
             $id = $this->id;
@@ -311,39 +299,35 @@ class Stage_pbm extends Form{
             <select onchange="showTuteur(this.value)" required class="form-control" style="background-color:#e8f0ff">
                 <option value=""></option>
                 <?php
-                foreach ($tabEntreprise as $key => $value) {
-                    
+                foreach ($tabEntreprise as $key => $value) {                
+
                     $selected = $this->selected($idEntreprise,$value["id_entreprise"]);
                     ?>
                     <option <?=$selected?> value="<?=$value['id_entreprise']?>"><?=$value["nom_entreprise"]?></option>;
                     <?php
-
                 }
                 ?>
             </select> 
         </div>
         <?php
     }
-    
+  
     public function Tuteur($dbh){
 
         $idEntreprise = $this->requestFk($dbh,"fk_entreprise","tuteur","id_tuteur",$this->tab["fk_tuteur_stage"],"fk_entreprise");
         $request = 'SELECT * FROM tuteur WHERE  fk_entreprise = :id';
         $array = array(':id'=>$idEntreprise);
         $tabTuteur = $this->tryPrepareAll($dbh,$request,$array,true);
-
         ?>
         <div class="form-group col-md-4">
             <label>Tuteur</label>
             <select id="ajaxTuteur" name="fk_tuteur_stage" required class="form-control" style="background-color:#e8f0ff">
                 <option value=""></option>
                 <?php foreach($tabTuteur as $key => $value){
-
                     $selected = $this->selected($this->tab["fk_tuteur_stage"],$value["id_tuteur"]);
                     ?>
                     <option <?=$selected?> value="<?=$value["id_tuteur"]?>"><?=$value["nom_tuteur"]." ".$value["prenom_tuteur"]?></option>;
                     <?php
-
                 }
                 ?>
             </select>
@@ -399,7 +383,6 @@ class Stage_pbm extends Form{
                     $this->checkbox("de mois","mois",$checkedMois,"duree_totale_de","duree_totale_par_mois","radio");
                     ?>
                 </div>
-
             </div>
         </div>
         <?php
@@ -431,7 +414,6 @@ class Stage_pbm extends Form{
                     $this->checkbox("par jour","jour",$checkedJour,"duree_discontinue_par","duree_discontinue_par_jour","radio");
                     ?>
                 </div>
-
 
             </div>
         </div>
@@ -510,7 +492,6 @@ class Stage_pbm extends Form{
                     }else{
                         $this->checkbox(ucfirst($value),$value,"",$value,$value,"checkbox");
                     }
-
                 }
                 ?>
             </div>
@@ -558,7 +539,7 @@ class Stage_pbm extends Form{
             $checkedHeure = "";
             $checkedJour = "";
             $checkedMois = "";
-        }
+       }
         ?>
         <div class='form-group'>
             <label>Le montant de la gratification est fixé à :</label>
@@ -596,11 +577,21 @@ class Stage_pbm extends Form{
         <?php
     }
 
+    public function intitulePoste(){
+        ?>
+        <div class="form-row">
+            <?php
+            $this->formGroup("Intitulé du Poste",$this->tab["intitulePoste"],"intitulePoste","text",5);
+            ?>
+        </div>
+        <?php
+    }
+
     public function activiteMission(){
         ?>
         <div class="form-row">
             <?php
-            $this->textArea("Activités / missions confiées","activites_missions","activites_missions",$this->tab["activites_missions"],"activites_missions");
+            $this->bigtextArea("Activités / missions confiées","activites_missions","activites_missions",$this->tab["activites_missions"],"activites_missions");
             ?>
         </div>
         <?php
@@ -610,12 +601,11 @@ class Stage_pbm extends Form{
         ?>
         <div class="form-row">
             <?php
-            $this->textArea("Compétences à acquérir ou à développer","competences_developper","competences_developper",$this->tab["competences_developper"],"competences_developper");
+            $this->bigtextArea("Compétences à acquérir ou à développer","competences_developper","competences_developper",$this->tab["competences_developper"],"competences_developper");
             ?>
         </div>
         <?php
     }
-
 
     public function type_stage(){
         ?>
@@ -641,6 +631,21 @@ class Stage_pbm extends Form{
         </div>
         <?php
     }
+
+    public function bigtextArea($nom,$id,$name,$value,$idLabel,$hidden = "",$col = 8){
+        if($name == "droit_avantage" || $name == "conditions_remboursement" || $name == "modalite_conge" || $name == "cas_particulier"){
+            $required = "";
+        }else{
+            $required = "required";
+        }
+        ?>
+        <div class="form-group col-md-<?=$col?>">
+            <label id="<?=$idLabel?>" <?=$hidden?>><?=$nom?></label>
+            <textarea class="form-control" <?=$required?> style="background-color:#e8f0ff" id="<?=$id?>" name="<?=$name?>" rows="10" cols="55" <?=$hidden?>><?= $value;?></textarea>
+        </div>
+        <?php
+    }
+
 
     public function requestFk($dbh,$select,$from,$where,$id,$key){
         $request = 'SELECT '.$select.' FROM '.$from.' WHERE '.$where.' = :id';
@@ -680,12 +685,14 @@ class Stage_pbm extends Form{
         <?php
     }
 
+
+
     public function droitAvantage(){
 
         ?>
         <div class="form-row">
             <h6 class="col-md-8">Accès aux droits des salariés, avantages <a class="badge badge-warning" data-toggle="collapse" role="button" data-target="#collapseExample">Détails</a></h6>
-            
+         
         </div>
         <div class="form-row">
             <div class="col-md-8 collapse" id="collapseExample">

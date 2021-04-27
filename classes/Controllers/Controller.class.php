@@ -9,7 +9,7 @@ class Controller
     public $view;
 
     public function __construct()
-    {
+    {	
         $this->dbh = \Database::pdo();
         $modelName = "\Model\\".$this->page;
         $viewName = "\View\\".$this->page;
@@ -26,10 +26,8 @@ class Controller
 
     public function show()
     {
-
         $form = "\Form\\" . $this->page;
         $card = new $form($this->dbh);
-
     }
 
     public function recupPassword(){

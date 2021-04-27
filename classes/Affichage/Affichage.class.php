@@ -127,7 +127,8 @@ class Affichage
                         <div class="d-flex col-md-3 justify-content-end" style="padding:0">
                     <?php elseif ($_SESSION["profile"] == "etudiant"): ?>
                         <div class="d-flex col-md-3 justify-content-between" style="padding:0">
-                    <?php endif; ?>    
+                    <?php endif; ?>  
+                    <?php if($_SESSION["profile"] != "etudiant"): ?>
                         <div class="dropdown">
                             <button type="button" class="btn btn-outline-info dropdown-toogle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtre</button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -140,6 +141,7 @@ class Affichage
                                 <?php endif ; ?>    
                             </div>
                         </div>
+                        <?php endif;?> 
                         <?php if( $_SESSION["profile"] == "etudiant"): ?>
                             <div class="dropdown show">
                                 <a class="btn btn-outline-primary" href="/Convention/index.php?controller=<?=$_GET["controller"]?>&task=show">Ajouter</a>
@@ -173,14 +175,27 @@ class Affichage
         }elseif(isset($_GET["id"]) || ($_SESSION["profile"] == "etudiant")) {
 
             //------PARTIE ADMIN----------
-            if (isset($_GET["id"])) {
+            if (isset($_GET["id"]) && $_SESSION["profile"] != "etudiant") {
                 $array = array(':id' => $_GET["id"], ':offset' => $offset);
+                $request = $this->requestId;
 
                 //------PARTIE ETUDIANTE--------
             } else {
-                $array = array(':id' => $_SESSION["id"], ':offset' => $offset);
+                //-----SELECT AVEC LA BARRE DE RECHERCHE--------
+                if ((!empty($_POST["recherche"])) || (!empty($_GET["recherche"]))) {
+                    $recherche = varRecherche();
+                    $array = array(':recherche' => $recherche, ':offset' => $offset);
+                    $request = $this->requestRechercheEntrepriseEtudiant;
+                    //----SELECT ALL-------
+                }
+                elseif($_GET["controller"] == "entreprise"){
+                    $array = array(':id_utilisateur' => $_SESSION["id"], ':offset' => $offset);
+                    $request = $this->requestEtudiant;
+                }else{
+                    $array = array(':id' => $_SESSION["id"], ':offset' => $offset);
+                    $request = $this->requestId;
+                }
             }
-            $request = $this->requestId;
         } else {
 
             //-----SELECT AVEC LA BARRE DE RECHERCHE--------

@@ -4,6 +4,15 @@ use \PDO;
 class Stage extends Form{
    
     public function __construct($dbh){
+	
+        //Initialisation
+        //$this->page = "stagiaire";
+        //$this->idPage = "id_stagiaire";
+        //$this->tab = $this->fetchStagiaire($dbh);
+
+        //Update ou Insert
+        //$this->id();
+        //$this->logic($dbh,",id_stagiaire",",".$this->id);
 
         $this->page = $_GET["controller"];
         $this->id();
@@ -26,23 +35,23 @@ class Stage extends Form{
             if(isset($_POST["envoi_".$this->page])){
                 
                 if(empty($_POST["fk_tuteur_stage"]) || empty($_POST["fk_referent_stage"])){
-                    echo "<div class='alert alert-danger col-md-auto d-inline-block'>Veuillez remplir les champs Référent et/ou Tuteur</div>";
+                    echo "<div class='alert alert-danger col-md-auto d-inline-block'>Veillez remplir les champs Référent et/ou Tuteur</div>";
                 }else{
-                    $this->insert($dbh,",fk_utilisateur_"."stage",",".$this->id);
+                    $this->insert($dbh,",fk_utilisateur_".$this->page,",".$this->id);
                 }
                 $bool = 0;
             }else{
                 $bool = 1;
                 $this->titre_form = "Ajout";
             }
+
         }
+
 
         if($bool == 1){
             ?>
             <h3><?=$this->titre_form?> stage</h3>
-            <!-- novalidate = disable the browser default feedback tootips -->
-            <!-- needs-validation = submit button is disable if this form is not valid -->
-            <form action="" method="post" novalidate>
+            <form action="" method="post"  novalidate>
                 <div class="form-row">
                     <?php
                     $this->anneeUniversitaire();
@@ -66,9 +75,10 @@ class Stage extends Form{
                     $this->dureeTotale();
                     $this->dureeDiscontinue();
                     #$this->repartitionSiDiscontinue();
-                    $this->commentaireDuree();
+                    //$this->commentaireDuree();
                     ?>
                 </div>
+
                 <br/>
                 <div class="form-row col-md-8 justify-content-between" style="padding-left:0;padding-right:0">
                     <?php
@@ -95,18 +105,10 @@ class Stage extends Form{
                 <hr/>
                 <h4>Objectifs du stage</h4>
                 <?php
-		        $this->intitulePoste();
                 $this->activiteMission();
                 $this->competence();
-                $this->type_stage();
-                echo "<br/>";                
-                if($this->tab["statut"] == "Stage valide" || $this->tab["statut"] == "Stage validé"){
-                    ?>
-                    <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="btn btn-secondary">Retour</a>
-                    <?php
-                }else{
-                    $this->button();
-                }
+                echo "<br/>";
+                $this->button();
                 ?>
             </form>
             <?php
@@ -194,6 +196,7 @@ class Stage extends Form{
         </div>
         <br/>
         <?php
+
     }
 
     public function service(){
@@ -210,7 +213,7 @@ class Stage extends Form{
          ?>
 	    <?php
 	    $idAnnee = $this->tab["annee_universitaire"];
-	    $tabAnnee = array("2020-21","2021-22","2022-23");
+	    $tabAnnee = array("2019-20","2020-21","2021-22","2022-23");
 	    ?>
 	    <div class="form-group col-md-4 ">
 
@@ -238,6 +241,7 @@ class Stage extends Form{
         $request ='SELECT * FROM etablissement';
         $array = array('');
         $tabEtablissement = $this->tryPrepareAll($dbh,$request,$array,true);
+
         ?>
         <div class="form-group col-md-4 ">
         <label for="etablissement">Etablissement</label>
@@ -276,6 +280,7 @@ class Stage extends Form{
                     ?>
                     <option <?=$selected?> value="<?=$value['id_referent']?>"><?=$value["nom_referent"].' '.$value["prenom_referent"]?></option>;
                     <?php
+
                 }
                 ?>
             </select>
@@ -286,10 +291,7 @@ class Stage extends Form{
     public function entreprise($dbh){
 
         $idEntreprise = $this->requestFk($dbh,"fk_entreprise","tuteur","id_tuteur",$this->tab["fk_tuteur_stage"],"fk_entreprise");
-        $request = 'SELECT * FROM entreprise WHERE fk_utilisateur_entreprise = :id
-                    UNION
-                    SELECT * FROM entreprise WHERE statut_entreprise = "permanente"
-                   ';
+        $request = 'SELECT * FROM entreprise WHERE fk_utilisateur_entreprise = :id';
         if($_SESSION["profile"] == "administrateur" && empty($_GET["id"])){
             $id = $this->tab["fk_utilisateur_stage"];
         }else{
@@ -310,6 +312,7 @@ class Stage extends Form{
                     ?>
                     <option <?=$selected?> value="<?=$value['id_entreprise']?>"><?=$value["nom_entreprise"]?></option>;
                     <?php
+
                 }
                 ?>
             </select> 
@@ -323,16 +326,19 @@ class Stage extends Form{
         $request = 'SELECT * FROM tuteur WHERE  fk_entreprise = :id';
         $array = array(':id'=>$idEntreprise);
         $tabTuteur = $this->tryPrepareAll($dbh,$request,$array,true);
+
         ?>
         <div class="form-group col-md-4">
             <label>Tuteur</label>
             <select id="ajaxTuteur" name="fk_tuteur_stage" required class="form-control" style="background-color:#e8f0ff">
                 <option value=""></option>
                 <?php foreach($tabTuteur as $key => $value){
+
                     $selected = $this->selected($this->tab["fk_tuteur_stage"],$value["id_tuteur"]);
                     ?>
                     <option <?=$selected?> value="<?=$value["id_tuteur"]?>"><?=$value["nom_tuteur"]." ".$value["prenom_tuteur"]?></option>;
                     <?php
+
                 }
                 ?>
             </select>
@@ -388,6 +394,7 @@ class Stage extends Form{
                     $this->checkbox("de mois","mois",$checkedMois,"duree_totale_de","duree_totale_par_mois","radio");
                     ?>
                 </div>
+
             </div>
         </div>
         <?php
@@ -419,6 +426,7 @@ class Stage extends Form{
                     $this->checkbox("par jour","jour",$checkedJour,"duree_discontinue_par","duree_discontinue_par_jour","radio");
                     ?>
                 </div>
+
 
             </div>
         </div>
@@ -497,6 +505,7 @@ class Stage extends Form{
                     }else{
                         $this->checkbox(ucfirst($value),$value,"",$value,$value,"checkbox");
                     }
+
                 }
                 ?>
             </div>
@@ -582,21 +591,11 @@ class Stage extends Form{
         <?php
     }
 
-    public function intitulePoste(){
-        ?>
-        <div class="form-row">
-            <?php
-            $this->formGroup("Intitulé du Poste",$this->tab["intitulePoste"],"intitulePoste","text",5);
-            ?>
-        </div>
-        <?php
-    }
-
     public function activiteMission(){
         ?>
         <div class="form-row">
             <?php
-            $this->bigtextArea("Activités / missions confiées","activites_missions","activites_missions",$this->tab["activites_missions"],"activites_missions");
+            $this->textArea("Activités / missions confiées","activites_missions","activites_missions",$this->tab["activites_missions"],"activites_missions");
             ?>
         </div>
         <?php
@@ -606,19 +605,8 @@ class Stage extends Form{
         ?>
         <div class="form-row">
             <?php
-            $this->bigtextArea("Compétences à acquérir ou à développer","competences_developper","competences_developper",$this->tab["competences_developper"],"competences_developper");
+            $this->textArea("Compétences à acquérir ou à développer","competences_developper","competences_developper",$this->tab["competences_developper"],"competences_developper");
             ?>
-        </div>
-        <?php
-    }
-
-    public function type_stage(){
-        ?>
-        <div class="form-row">
-            <div class="form-group col-md-<?=$col?>">
-                <input class="form-control" id="type_stage" name="type_stage" type="hidden" value="MSCMBA" />
-            <!-- <textarea class="form-control" style="background-color:#e8f0ff" id="type_stage" name="type_stage" value="MSCMBA" style="display:none;"></textarea> -->
-            </div>
         </div>
         <?php
     }
@@ -633,20 +621,6 @@ class Stage extends Form{
         <div class="form-group col-md-<?=$col?>">
             <label id="<?=$idLabel?>" <?=$hidden?>><?=$nom?></label>
             <textarea class="form-control" <?=$required?> style="background-color:#e8f0ff" id="<?=$id?>" name="<?=$name?>" rows="3" cols="55" <?=$hidden?>><?= $value;?></textarea>
-        </div>
-        <?php
-    }
-
-public function bigtextArea($nom,$id,$name,$value,$idLabel,$hidden = "",$col = 8){
-        if($name == "droit_avantage" || $name == "conditions_remboursement" || $name == "modalite_conge" || $name == "cas_particulier"){
-            $required = "";
-        }else{
-            $required = "required";
-        }
-        ?>
-        <div class="form-group col-md-<?=$col?>">
-            <label id="<?=$idLabel?>" <?=$hidden?>><?=$nom?></label>
-            <textarea class="form-control" <?=$required?> style="background-color:#e8f0ff" id="<?=$id?>" name="<?=$name?>" rows="10" cols="55" <?=$hidden?>><?= $value;?></textarea>
         </div>
         <?php
     }
@@ -666,7 +640,7 @@ public function bigtextArea($nom,$id,$name,$value,$idLabel,$hidden = "",$col = 8
         ?>
         <div class="form-row">
             <label class="col-md-8">
-                Pour les stages dont la durée est supérieure à deux mois et dans la limite de la durée maximal de six mois, des congés ou autorisation d'absence sont possibles.<br/>
+                Pour les stages dont la durée est supérieur à deux mois et dans la limite de la durée maximal de six mois, des congés ou autorisation d'absence sont possibles.<br/>
                 <br/>
                 Avez-vous des jours de congés ?
             </label>

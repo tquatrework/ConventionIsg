@@ -8,7 +8,7 @@ $pdf->MultiCell(0,5,utf8_decode("Le STAGIAIRE se voit confier une ou des mission
 
 $pdf->Ln();
 $pdf->Cell(60,5,utf8_decode("Titre du poste : "),0,1);
-$pdf->Cell(0,5,utf8_decode($intitule_poste),1,1);
+$pdf->Cell(0,5,utf8_decode($intitulePoste),1,1);
 $pdf->Ln();
 
 

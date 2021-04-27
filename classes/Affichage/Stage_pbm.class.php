@@ -6,6 +6,7 @@ class Stage_pbm extends Affichage{
     public $lien_pdf;
     public $lien_validation;
     public $lien_confirmation;
+    public $lien_devalidation;
     public $tab;
     
     public function __construct($dbh){
@@ -49,10 +50,11 @@ class Stage_pbm extends Affichage{
 
         $tabResult = $this->select($dbh,"Liste des stages","Aucun stage");
 
+        
         if(is_array($tabResult) && !empty($tabResult)){
             foreach($tabResult as $tab){
                 $this->tab = $tab;
-                $requestNomEntreprise = 'SELECT nom_entreprise from tuteur
+                $requestNomEntreprise = 'SELECT nom_entreprise FROM tuteur
                                         INNER JOIN entreprise ON tuteur.fk_entreprise = entreprise.id_entreprise
                                         WHERE id_tuteur = '.$tab["fk_tuteur_stage"].'';
                 $resultNomEntreprise = select($requestNomEntreprise,$dbh,"");
@@ -79,12 +81,12 @@ class Stage_pbm extends Affichage{
                 $this->lien_suppression = "/Convention/index.php?id_stage=".$tab['id_stage']."&controller=stage_pbm&task=supprimer&token=".$_SESSION["token"];
                 $this->lien_validation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage_pbm&task=validation";
                 $this->lien_confirmation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage_pbm&task=confirmation";
+                $this->lien_devalidation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage_pbm&task=devalidationStage";                
                 $this->lien_pdf = "pdf_pbm/pdf.php?id_stage=".$tab["id_stage"];
                 $this->card(); 
                 $this->reset();
                 echo "<br/>";
             }
-            //var_dump($dbh);
             $page = new \Pagination\Pagination($dbh);
         }
     } 
@@ -96,17 +98,35 @@ class Stage_pbm extends Affichage{
             <?php
             if(empty($this->tab["statut"]) && $_SESSION["profile"] == "etudiant"){
                 ?>
-                <a href="<?=$this->lien_validation?>" class="btn btn-outline-danger btn-sm">Valider</a>
+                <a href="<?=$this->lien_validation?>" class="btn btn-outline-danger btn-sm">Envoyer</a>
                 <?php
             }elseif($this->tab["statut"] == "en attente de validation" && $_SESSION["profile"] == "administrateur"){
                 ?>
                 <a href="<?=$this->lien_confirmation?>" class="btn btn-outline-danger btn-sm">Valider</a>
                 <?php
+            }elseif(($this->tab["statut"] == "Stage valide" || $this->tab["statut"] == "Stage validé") && $_SESSION["profile"] != "etudiant"){
+                ?>
+                <a href="<?=$this->lien_devalidation?>" class="btn btn-outline-danger btn-sm">Dévalider</a>
+                <?php
             }
             ?>
             <a href="<?=$this->lien_pdf?>" class="btn btn-outline-primary btn-sm">PDF</a>
+            <?php if($this->tab["statut"] == "Stage valide" || $this->tab["statut"] == "Stage validé"){
+                ?>
+                <a href="<?=$this->lien_modification?>" class="btn btn-primary btn-sm">Consulter</a>
+                <?php
+            }else{
+                ?>
             <a href="<?=$this->lien_modification?>" class="btn btn-primary btn-sm">Modification</a>
+            <?php
+            }    
+            ?>
+            <?php if($this->tab["statut"] != "Stage valide" && $this->tab["statut"] != "Stage validé"){
+            ?>
             <a href="<?=$this->lien_suppression?>" class="btn btn-info btn-sm">Suppression</a>
+            <?php
+            }
+            ?>
         </div>
         <?php
     }

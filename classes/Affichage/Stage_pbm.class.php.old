@@ -1,20 +1,18 @@
 <?php
 namespace Affichage;
 use \PDO;
-class Stage extends Affichage{
+class Stage_pbm extends Affichage{
 
     public $lien_pdf;
     public $lien_validation;
     public $lien_confirmation;
-    public $lien_devalidation;
     public $tab;
     
     public function __construct($dbh){
  
         $this->requestId = 'SELECT * FROM stage
                             INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
-                            WHERE fk_utilisateur_stage = :id
-                            && type_stage="MSCMBA"
+                            WHERE fk_utilisateur_stage = :id 
                             ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $this->requestRecherche = 'SELECT * FROM stage
@@ -28,25 +26,22 @@ class Stage extends Affichage{
                                 || CONCAT(prenom_stagiaire," ",nom_stagiaire) LIKE CONCAT(:recherche,"%") 
                                 || classe LIKE CONCAT(:recherche,"%") 
                                 || classe LIKE CONCAT("%",:recherche,"%") 
-                                || classe LIKE CONCAT("%",:recherche))
-                                && type_stage="MSCMBA"
+                                || classe LIKE CONCAT("%",:recherche)) 
+                                && type_stage="PBM"
                                 ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $this->requestAll = 'SELECT * FROM stage
                             INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
-                            WHERE type_stage="MSCMBA"
                             ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $this->requestFiltreAttente = 'SELECT * FROM stage
                                 INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
                                 WHERE statut = "en attente de validation"
-                                && type_stage="MSCMBA"
                                 ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $this->requestFiltreValide = 'SELECT * FROM stage
                                 INNER JOIN stagiaire ON stage.fk_utilisateur_stage = stagiaire.id_stagiaire 
                                 WHERE statut = "Stage validé"
-                                && type_stage="MSCMBA"
                                 ORDER BY nom_stagiaire LIMIT 5 OFFSET :offset';
 
         $tabResult = $this->select($dbh,"Liste des stages","Aucun stage");
@@ -54,7 +49,7 @@ class Stage extends Affichage{
         if(is_array($tabResult) && !empty($tabResult)){
             foreach($tabResult as $tab){
                 $this->tab = $tab;
-                $requestNomEntreprise = 'SELECT nom_entreprise FROM tuteur
+                $requestNomEntreprise = 'SELECT nom_entreprise from tuteur
                                         INNER JOIN entreprise ON tuteur.fk_entreprise = entreprise.id_entreprise
                                         WHERE id_tuteur = '.$tab["fk_tuteur_stage"].'';
                 $resultNomEntreprise = select($requestNomEntreprise,$dbh,"");
@@ -80,8 +75,7 @@ class Stage extends Affichage{
                 $this->lien_suppression = "/Convention/index.php?id_stage=".$tab['id_stage']."&controller=stage&task=supprimer&token=".$_SESSION["token"];
                 $this->lien_validation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage&task=validation";
                 $this->lien_confirmation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage&task=confirmation";
-                $this->lien_devalidation = "/Convention/index.php?id_stage=".$tab["id_stage"]."&controller=stage&task=devalidationStage";
-                $this->lien_pdf = "pdf/pdf.php?id_stage=".$tab["id_stage"];
+                $this->lien_pdf = "pdf_pbm/pdf.php?id_stage=".$tab["id_stage"];
                 $this->card(); 
                 $this->reset();
                 echo "<br/>";
@@ -103,29 +97,11 @@ class Stage extends Affichage{
                 ?>
                 <a href="<?=$this->lien_confirmation?>" class="btn btn-outline-danger btn-sm">Valider</a>
                 <?php
-            }elseif(($this->tab["statut"] == "Stage valide" || $this->tab["statut"] == "Stage validé") && $_SESSION["profile"] != "etudiant"){
-                ?>
-                <a href="<?=$this->lien_devalidation?>" class="btn btn-outline-danger btn-sm">Dévalider</a>
-                <?php
             }
             ?>
             <a href="<?=$this->lien_pdf?>" class="btn btn-outline-primary btn-sm">PDF</a>
-            <?php if($this->tab["statut"] == "Stage valide" || $this->tab["statut"] == "Stage validé"){
-                ?>
-                <a href="<?=$this->lien_modification?>" class="btn btn-primary btn-sm">Consulter</a>
-                <?php
-            }else{
-                ?>
             <a href="<?=$this->lien_modification?>" class="btn btn-primary btn-sm">Modification</a>
-            <?php
-            }    
-            ?>
-            <?php if($this->tab["statut"] != "Stage valide" && $this->tab["statut"] != "Stage validé"){
-            ?>
             <a href="<?=$this->lien_suppression?>" class="btn btn-info btn-sm">Suppression</a>
-            <?php
-            }
-            ?>
         </div>
         <?php
     }
