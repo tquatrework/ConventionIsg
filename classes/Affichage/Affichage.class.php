@@ -102,10 +102,10 @@ class Affichage
             <h3 class="col-md-8" style='padding-left:0'><?=$nom?></h3>
             <?php if (!empty($_GET["controller"])): ?> 
 
-                <?php if (!isset($_GET["id"]) && $_SESSION["profile"] == "administrateur" && $_GET["controller"] == 'stage'): ?>
-                    <div class="d-flex col-md-3 justify-content-between" style="padding:0">
+                <?php if (!isset($_GET["id"]) && $_SESSION["profile"] == "administrateur" && strtolower(substr($_GET["controller"],0,5)) == 'stage'): ?>
+                    <div class="d-flex col-md-3 justify-content-end" style="padding:0">
                         <div class="dropdown">
-                            <button type="button" class="btn btn-outline-info dropdown-toogle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtre</button>
+                            <button type="button" class="btn btn-outline-info dropdown-toogle mr-1" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtre</button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="index.php?task=liste&controller=stage&filtre=enAttente">En attente de validation</a>
                                 <a class="dropdown-item" href="index.php?task=liste&controller=stage&filtre=valide">Stage validé</a>
@@ -130,7 +130,7 @@ class Affichage
                     <?php endif; ?>  
                     <?php if($_SESSION["profile"] != "etudiant"): ?>
                         <div class="dropdown">
-                            <button type="button" class="btn btn-outline-info dropdown-toogle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtre</button>
+                            <button type="button" class="btn btn-outline-info dropdown-toogle mr-1" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtre</button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <?php if ($_SESSION["profile"] == "etudiant"): ?>
                                     <a class="dropdown-item" href="index.php?task=liste&controller=entreprise">Mes entreprises</a>
