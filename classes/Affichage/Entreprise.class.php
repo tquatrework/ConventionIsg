@@ -13,7 +13,9 @@ class Entreprise extends Affichage{
         $this->requestId = 'SELECT * FROM entreprise WHERE fk_utilisateur_entreprise = :id ORDER BY nom_entreprise LIMIT 5 OFFSET :offset';
         $this->requestRecherche = 'SELECT * FROM entreprise WHERE nom_entreprise LIKE CONCAT("%",:recherche,"%") ORDER BY nom_entreprise LIMIT 5 OFFSET :offset';
         $this->requestAll = 'SELECT * FROM entreprise ORDER BY nom_entreprise LIMIT 5 OFFSET :offset';
-        $this->requestFiltrePermanente = 'SELECT * FROM entreprise WHERE statut = "permanente" LIMIT 5 OFFSET :offset';
+        $this->requestFiltrePermanente = 'SELECT * FROM entreprise WHERE statut_entreprise = "permanente" LIMIT 5 OFFSET :offset';
+        //$this->requestRechercheEntrepriseEtudiant= 'SELECT * FROM entreprise WHERE fk_utilisateur_entreprise = :id AND nom_entreprise LIKE CONCAT("%",:recherche,"%") ORDER BY nom_entreprise LIMIT 5 OFFSET :offset';
+        $this->requestRechercheEntrepriseEtudiant= 'SELECT * FROM entreprise WHERE (statut_entreprise = "permanente" OR fk_utilisateur_entreprise = :id) AND nom_entreprise LIKE CONCAT("%",:recherche,"%") ORDER BY nom_entreprise LIMIT 5 OFFSET :offset';
         $tabResult = $this->select($dbh,"Liste des entreprises","Aucune entreprise");
 
         //---------AFFICHAGE---------------- 

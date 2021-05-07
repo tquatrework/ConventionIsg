@@ -291,6 +291,7 @@ $header = array(
 
 
 
+//ini_set('display_errors', 0);
 
 $writer = new \XLSXWriter();
 
@@ -311,6 +312,8 @@ foreach($resultStage as $row){
 }
 
 $writer->writeToFile('convention_de_stage.xlsx');
+
+$writer->finalizeSheet();
 
 
 
@@ -509,7 +512,12 @@ function getColumnsAndTypes($table){
 
         }
 
-        return $output; 
+        //var_dump($output);
+        $output=array_replace($output,array_fill_keys(array_keys($output,"varchar"),"integer"));
+        $output=array_replace($output,array_fill_keys(array_keys($output,"text"),"string"));
+        //var_dump($output);die;
+
+        return $output;
 
     }
 

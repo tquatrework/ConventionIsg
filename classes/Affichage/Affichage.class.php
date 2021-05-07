@@ -141,13 +141,13 @@ class Affichage
                                 <?php endif ; ?>    
                             </div>
                         </div>
-                        <?php endif;?> 
-                        <?php if( $_SESSION["profile"] == "etudiant"): ?>
-                            <div class="dropdown show">
+                    <?php   endif;?> 
+                    <?php //if( $_SESSION["profile"] == "etudiant"): ?>
+                            <!--<div class="dropdown show">
                                 <a class="btn btn-outline-primary" href="/Convention/index.php?controller=<?=$_GET["controller"]?>&task=show">Ajouter</a>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+                            </div>-->
+                    <?php //endif; ?>
+                </div>
                 <?php endif; ?>
 
             <?php endif; ?>
@@ -181,20 +181,31 @@ class Affichage
 
                 //------PARTIE ETUDIANTE--------
             } else {
-                //-----SELECT AVEC LA BARRE DE RECHERCHE--------
+                
+                //-----SELECT AVEC LA BARRE DE RECHERCHE-------
+
                 if ((!empty($_POST["recherche"])) || (!empty($_GET["recherche"]))) {
                     $recherche = varRecherche();
-                    $array = array(':recherche' => $recherche, ':offset' => $offset);
-                    $request = $this->requestRechercheEntrepriseEtudiant;
+                    if(isset($_GET["id"]) ){
+                        $array = array(':id' => $_SESSION["id"], ':recherche' => $recherche, ':offset' => $offset);
+                        $request = $this->requestRechercheEntrepriseEtudiant;
+                    }
+                    else
+                    {
+                        $array = array(':recherche' => $recherche, ':offset' => $offset);
+                        $request = $this->requestRecherche;
+                    }
                     //----SELECT ALL-------
                 }
                 elseif($_GET["controller"] == "entreprise"){
-                    $array = array(':id_utilisateur' => $_SESSION["id"], ':offset' => $offset);
-                    $request = $this->requestEtudiant;
+                    $array = array(':id' => $_SESSION["id"], ':offset' => $offset);
+                    //$array = array(':id_utilisateur' => $_SESSION["id"], ':offset' => $offset);
+                    //$array = array(':offset' => $offset);
+                    //$request = $this->requestEtudiant;
+                    $request = $this->requestId;
                 }else{
                     $array = array(':id' => $_SESSION["id"], ':offset' => $offset);
-                    $request = $this->requestId;
-                }
+                    $request = $this->requestId;                }
             }
         } else {
 
@@ -211,6 +222,7 @@ class Affichage
             }
         }
         $tabResult = requestRecherche($dbh, $request, $erreur, $array);
+
         return $tabResult;
     }
 

@@ -51,6 +51,7 @@ class Stage extends Affichage{
 
         $tabResult = $this->select($dbh,"Liste des stages","Aucun stage");
 
+
         if(is_array($tabResult) && !empty($tabResult)){
             foreach($tabResult as $tab){
                 $this->tab = $tab;

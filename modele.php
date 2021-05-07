@@ -132,7 +132,7 @@ function sql($request,$dbh,$text = ""){
     }
 }
 
-function selectAll($request,$dbh,$text = ""){
+function selectAll($request, $dbh, $text = ""){
     $result = $dbh->query($request);
     if (!$result) {
         echo "\nPDO::errorInfo():\n";
@@ -278,8 +278,9 @@ function tryCatchAll($dbh,$request,$array){
                 $sth->bindValue($key,$value,\PDO::PARAM_INT);
             }else{
                 $sth->bindValue($key,$value);
-            }
+                }
         }
+
          $sth->execute();
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
             if($result){
@@ -538,7 +539,7 @@ function tryPrepareAll($dbh,$request,$array,$fetch = false){
     }
 }
 
-function supprimer($dbh,$table,$where,$id,$erreur = ""){
+function supprimer($dbh, $table, $where, $id, $erreur = ""){
 
     verifToken();
     if(!verifDroitSuppression($dbh,$table,$id)){return;}
